@@ -59,7 +59,7 @@ To identify **performance differences** among major frontend libraries for SPA d
 
 ### 1️⃣ Clone the repository
 ```bash
-git clone https://github.com/<your-username>/<repo-name>.git
+git clone https://github.com/Skatox/spa-benchmark-suite.git
 cd <repo-name>
 ```
 
@@ -131,8 +131,8 @@ Software Engineer | Professor | Researcher
 
 ## 📜 License
 
-This project is released under the **MIT License**.  
-You are free to use, modify, and distribute this work with proper attribution.
+This project is released under the **GNU General Public License v3.0 (GPL-3.0)**.  
+You are free to use, modify, and distribute this work under the terms of the GNU General Public License v3.0. See the LICENSE file for details.
 
 ---
 
