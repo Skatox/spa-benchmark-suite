@@ -16,7 +16,6 @@ The comparison includes the following frameworks:
 - **React**
 - **Vue**
 - **Svelte**
-- **HTMX**
 
 Each SPA reproduces the same core functionality to ensure consistent testing conditions.  
 The evaluation follows a structured methodology for performance measurement and analysis.
@@ -35,7 +34,6 @@ To identify **performance differences** among major frontend libraries for SPA d
 /react-app        → SPA implemented with React
 /vue-app          → SPA implemented with Vue
 /svelte-app       → SPA implemented with Svelte
-/htmx-app         → SPA implemented with HTMX
 /scripts          → Benchmark and metric collection scripts
 /results          → Performance data, charts, and analysis reports
 /docs             → Thesis documentation and reference material
@@ -47,7 +45,7 @@ To identify **performance differences** among major frontend libraries for SPA d
 
 | Category | Tools |
 |-----------|--------|
-| Frontend Frameworks | React, Vue, Svelte, HTMX |
+| Frontend Frameworks | React, Vue, Svelte |
 | Build Tools | Vite, Node.js |
 | Performance Testing | Lighthouse, WebPageTest, Chrome DevTools, Performance API |
 | Data Analysis | Python, Pandas, Matplotlib |
@@ -60,7 +58,7 @@ To identify **performance differences** among major frontend libraries for SPA d
 ### 1️⃣ Clone the repository
 ```bash
 git clone https://github.com/Skatox/spa-benchmark-suite.git
-cd <repo-name>
+cd spa-benchmark-suite
 ```
 
 ### 2️⃣ Install dependencies
@@ -72,7 +70,7 @@ npm install
 npm run dev
 ```
 
-Do the same for `/vue-app`, `/svelte-app`, and `/htmx-app`.
+Do the same for `/vue-app` and `/svelte-app`.
 
 ### 3️⃣ Run performance tests
 Use the scripts in the `/scripts` folder:
@@ -146,6 +144,6 @@ If you use this repository in academic work, please cite as:
 
 ## 🧠 Keywords
 
-`React` • `Vue` • `Svelte` • `HTMX` • `SPA` • `Performance` • `Benchmark` • `Frontend` • `Web Development` • `JavaScript`
+`React` • `Vue` • `Svelte` • `SPA` • `Performance` • `Benchmark` • `Frontend` • `Web Development` • `JavaScript`
 
 ---
