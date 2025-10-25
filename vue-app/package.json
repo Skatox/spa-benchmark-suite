@@ -1,0 +1,36 @@
+{
+  "name": "spa-benchmark-suite-vue",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 5174",
+    "lint": "eslint src --ext .vue,.js",
+    "test": "vitest",
+    "start:prod": "npm run build && npm run preview"
+  },
+  "dependencies": {
+    "@headlessui/vue": "^1.7.20",
+    "@heroicons/vue": "^2.1.1",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.15",
+    "vue-router": "^4.3.0",
+    "web-vitals": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.25",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/eslint-config-typescript": "^12.0.0",
+    "@vue/test-utils": "^2.4.5",
+    "autoprefixer": "^10.4.17",
+    "eslint": "^8.56.0",
+    "eslint-plugin-vue": "^9.19.2",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10",
+    "vitest": "^1.2.2"
+  }
+}
