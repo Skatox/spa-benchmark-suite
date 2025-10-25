@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+a {
+  color: theme('colors.brand.DEFAULT');
+}
+
+body {
+  @apply bg-slate-100 text-slate-900 antialiased;
+}
+
+main {
+  @apply min-h-screen;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  @apply outline-none ring-2 ring-brand;
+}
