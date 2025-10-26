@@ -1,0 +1,19 @@
+{
+  "name": "spa-benchmark-suite",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "install:apps": "npm --prefix react-app install && npm --prefix vue-app install && (test -d svelte-app && npm --prefix svelte-app install || true)",
+    "bench:react": "node scripts/run.js --tech react",
+    "bench:vue": "node scripts/run.js --tech vue",
+    "bench:svelte": "node scripts/run.js --tech svelte",
+    "bench:all": "node scripts/run.js"
+  },
+  "dependencies": {
+    "chrome-launcher": "^0.15.3",
+    "lighthouse": "^11.7.1",
+    "playwright": "^1.43.0"
+  }
+}
+
