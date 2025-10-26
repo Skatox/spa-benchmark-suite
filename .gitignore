@@ -1,4 +1,12 @@
+# Dependencies
 node_modules/
+**/node_modules/
+
+# Build outputs
+**/dist/
+
+# Benchmark artefacts
+results/
 results/raw/*.json
 results/summary/*.csv
 playwright-report/
