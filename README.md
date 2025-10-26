@@ -73,13 +73,15 @@ npm run dev
 Do the same for `/vue-app` and `/svelte-app`.
 
 ### 3️⃣ Run performance tests
-Use the scripts in the `/scripts` folder:
+Automated benchmarks are orchestrated through the Node.js utilities in [`/scripts`](./scripts). Use the npm helpers from the repository root:
+
 ```bash
-cd scripts
-python run_tests.py
+npm install
+npm run install:apps
+npm run bench:all
 ```
 
-These scripts can automate Lighthouse tests, collect metrics (First Contentful Paint, TTI, TBT, etc.) and store results in `/results`.
+To focus on a single technology, replace `bench:all` with `bench:react`, `bench:vue`, or `bench:svelte`. Each command builds the selected app(s), launches a Vite preview server, executes the Playwright user flows, runs Lighthouse, and persists raw plus aggregated metrics under `/results`.
 
 ---
 
