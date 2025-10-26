@@ -7,3 +7,7 @@ node_modules/
 
 # Benchmark artefacts
 results/
+results/raw/*.json
+results/summary/*.csv
+playwright-report/
+.lighthouse/
