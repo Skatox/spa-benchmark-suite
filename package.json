@@ -1,0 +1,19 @@
+{
+  "name": "spa-benchmark-suite",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Benchmark analysis utilities for SPA benchmark suite.",
+  "scripts": {
+    "results:aggregate": "node results/analysis/aggregate.js",
+    "results:charts": "node results/analysis/charts.js",
+    "results:report": "node results/analysis/report.js",
+    "results:build": "npm run results:aggregate && npm run results:charts && npm run results:report"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.4",
+    "chartjs-node-canvas": "^4.3.0",
+    "csv-parse": "^5.5.2",
+    "markdown-table": "^3.0.3"
+  }
+}
