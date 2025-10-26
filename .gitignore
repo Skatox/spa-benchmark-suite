@@ -1,0 +1,5 @@
+node_modules/
+results/raw/*.json
+results/summary/*.csv
+playwright-report/
+.lighthouse/
