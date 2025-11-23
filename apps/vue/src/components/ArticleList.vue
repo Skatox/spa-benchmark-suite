@@ -1,5 +1,5 @@
 <script setup>
-import { defineEmits, defineProps, toRefs } from 'vue';
+import { toRefs } from 'vue';
 import ArticlePreview from './ArticlePreview.vue';
 import Pagination from './Pagination.vue';
 
