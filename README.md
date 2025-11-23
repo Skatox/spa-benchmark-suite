@@ -10,12 +10,12 @@ This repository contains TodoMVC implementations for React, Vue, and Svelte to f
 
 ```
 apps/
-├── react/      - TodoMVC repository (use examples/react/)
-├── vue/        - TodoMVC repository (use examples/vue/)
-└── svelte/     - TodoMVC repository (use examples/svelte/)
+├── react/      - React implementation
+├── vue/        - Vue implementation
+└── svelte/     - Svelte implementation
 ```
 
-Each subfolder in `apps/` contains the complete TodoMVC repository as a git submodule. The specific framework implementations are located in the `examples/<framework>/` directory within each submodule.
+Each subfolder in `apps/` contains a standalone implementation of the RealWorld SPA for its respective framework.
 
 ## Getting Started
 
@@ -37,23 +37,23 @@ git submodule update --init --recursive
 
 #### React
 ```bash
-cd apps/react/examples/react
+cd apps/react
 npm install
-npm start
+npm run dev -- --host --port 3000
 ```
 
 #### Vue
 ```bash
-cd apps/vue/examples/vue
+cd apps/vue
 npm install
-npm run dev
+npm run dev -- --host --port 3001
 ```
 
 #### Svelte
 ```bash
-cd apps/svelte/examples/svelte
+cd apps/svelte
 npm install
-npm run dev
+npm run dev -- --host --port 3002
 ```
 
 ### Running all apps together
@@ -65,7 +65,7 @@ npm install
 npm run start:all
 ```
 
-Each app runs on its own port (`react`: 3000, `vue`: 4173, `svelte`: 4174) so they won't conflict with one another.
+Each app runs on its own port (`react`: 3000, `vue`: 3001, `svelte`: 3002) so they won't conflict with one another.
 
 ## Benchmarking
 
