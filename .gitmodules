@@ -1,0 +1,9 @@
+[submodule "apps/react"]
+	path = apps/react
+	url = https://github.com/tastejs/todomvc
+[submodule "apps/vue"]
+	path = apps/vue
+	url = https://github.com/tastejs/todomvc
+[submodule "apps/svelte"]
+	path = apps/svelte
+	url = https://github.com/tastejs/todomvc
