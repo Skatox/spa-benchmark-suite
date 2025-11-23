@@ -13,7 +13,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://api.realworld.io',
+        target: 'https://api.realworld.show',
         changeOrigin: true,
         secure: true,
       },

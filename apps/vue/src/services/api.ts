@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL ?? 'https://api.realworld.io/api'
+const API_URL = import.meta.env.VITE_API_URL ?? '/api'
 
 export type User = {
   email: string
