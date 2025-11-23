@@ -56,6 +56,17 @@ npm install
 npm run dev
 ```
 
+### Running all apps together
+
+From the repository root, you can start all three examples at once using npm scripts defined in the top-level `package.json`:
+
+```bash
+npm install
+npm run start:all
+```
+
+Each app runs on its own port (`react`: 3000, `vue`: 4173, `svelte`: 4174) so they won't conflict with one another.
+
 ## Benchmarking
 
 Each TodoMVC implementation provides the same functionality, making them ideal for performance comparisons. You can benchmark:
