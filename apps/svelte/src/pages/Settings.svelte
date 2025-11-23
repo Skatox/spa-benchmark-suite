@@ -1,6 +1,6 @@
 <script>
   import { user, token, updateUser, logout } from '../stores/auth'
-  import { goto } from 'svelte-spa-router'
+  import { push } from 'svelte-spa-router'
   import { get } from 'svelte/store'
 
   let image = $user?.image || ''
@@ -21,7 +21,7 @@
     event.preventDefault()
     try {
       await updateUser(get(token), { image, username, bio, email, ...(password ? { password } : {}) })
-      goto('/')
+      push('/')
     } catch (err) {
       errors = err
     }
@@ -57,5 +57,5 @@
     <button class="btn primary" type="submit">Update Settings</button>
   </form>
   <hr />
-  <button class="btn" on:click={() => { logout(); goto('/') }}>Or click here to logout.</button>
+  <button class="btn" on:click={() => { logout(); push('/') }}>Or click here to logout.</button>
 </div>

@@ -3,7 +3,7 @@
   import { articles as articleApi } from '../services/api'
   import { token } from '../stores/auth'
   import { get } from 'svelte/store'
-  import { goto } from 'svelte-spa-router'
+  import { push } from 'svelte-spa-router'
 
   export let params = {}
   let slug = params.slug
@@ -47,7 +47,7 @@
       } else {
         response = await articleApi.create(get(token), payload)
       }
-      goto(`/article/${response.article.slug}`)
+      push(`/article/${response.article.slug}`)
     } catch (err) {
       errors = err
     }

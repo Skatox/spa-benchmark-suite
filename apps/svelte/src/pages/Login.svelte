@@ -1,6 +1,6 @@
 <script>
   import { login, authError } from '../stores/auth'
-  import { goto } from 'svelte-spa-router'
+  import { push } from 'svelte-spa-router'
 
   let email = ''
   let password = ''
@@ -11,7 +11,7 @@
     errors = null
     try {
       await login(email, password)
-      goto('/')
+      push('/')
     } catch (err) {
       errors = err
     }

@@ -1,6 +1,6 @@
 <script>
   import { register } from '../stores/auth'
-  import { goto } from 'svelte-spa-router'
+  import { push } from 'svelte-spa-router'
 
   let username = ''
   let email = ''
@@ -12,7 +12,7 @@
     errors = null
     try {
       await register(username, email, password)
-      goto('/')
+      push('/')
     } catch (err) {
       errors = err
     }

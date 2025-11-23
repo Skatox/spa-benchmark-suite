@@ -4,7 +4,7 @@
   import { token, user } from '../stores/auth'
   import { get } from 'svelte/store'
   import CommentList from '../components/CommentList.svelte'
-  import { goto } from 'svelte-spa-router'
+  import { push } from 'svelte-spa-router'
 
   export let params
   let article
@@ -33,7 +33,7 @@
   async function removeArticle() {
     if (!get(token)) return
     await articleApi.delete(get(token), article.slug)
-    goto('/')
+    push('/')
   }
 </script>
 
