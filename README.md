@@ -9,11 +9,10 @@ This repository contains SPA implementations meant to facilitate performance ben
 ## Structure
 
 ```
-apps/
-└── vue/        - Vue + Vite RealWorld SPA implementation
+app/            - Vue + Vite RealWorld SPA implementation
 ```
 
-Each subfolder in `apps/` hosts a full SPA. The Vue app is a first-class project scaffolded with Vite and aligned to the RealWorld feature set.
+The Vue app is a first-class project scaffolded with Vite and aligned to the RealWorld feature set.
 
 ## Getting Started
 
@@ -35,7 +34,7 @@ git submodule update --init --recursive
 
 #### Vue (RealWorld)
 ```bash
-cd apps/vue
+cd app
 npm install
 npm run dev -- --host --port 4173
 ```

@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start:react": "cross-env PORT=3000 npm --prefix apps/react/examples/react start",
-    "start:vue": "npm --prefix apps/vue run dev -- --host --port 4173",
+    "start:vue": "npm --prefix app run dev -- --host --port 4173",
     "start:svelte": "npm --prefix apps/svelte/examples/svelte run dev -- --host --port 4174",
     "start:all": "concurrently -k -n react,vue,svelte -c blue,green,magenta \"npm run start:react\" \"npm run start:vue\" \"npm run start:svelte\""
   },
