@@ -1,21 +1,19 @@
 # spa-benchmark-suite
 
-A benchmark suite for comparing SPA (Single Page Application) frameworks using TodoMVC examples.
+A benchmark suite for comparing SPA (Single Page Application) frameworks using reference applications.
 
 ## Overview
 
-This repository contains TodoMVC implementations for React, Vue, and Svelte to facilitate performance benchmarking and comparison between these popular SPA frameworks.
+This repository contains SPA implementations meant to facilitate performance benchmarking and comparison between popular frameworks. It currently includes a Vue + Vite implementation of the RealWorld specification so it can be compared against future apps built with other stacks.
 
 ## Structure
 
 ```
 apps/
-├── react/      - TodoMVC repository (use examples/react/)
-├── vue/        - TodoMVC repository (use examples/vue/)
-└── svelte/     - TodoMVC repository (use examples/svelte/)
+└── vue/        - Vue + Vite RealWorld SPA implementation
 ```
 
-Each subfolder in `apps/` contains the complete TodoMVC repository as a git submodule. The specific framework implementations are located in the `examples/<framework>/` directory within each submodule.
+Each subfolder in `apps/` hosts a full SPA. The Vue app is a first-class project scaffolded with Vite and aligned to the RealWorld feature set.
 
 ## Getting Started
 
@@ -35,41 +33,25 @@ git submodule update --init --recursive
 
 ### Running the Examples
 
-#### React
+#### Vue (RealWorld)
 ```bash
-cd apps/react/examples/react
+cd apps/vue
 npm install
-npm start
-```
-
-#### Vue
-```bash
-cd apps/vue/examples/vue
-npm install
-npm run dev
-```
-
-#### Svelte
-```bash
-cd apps/svelte/examples/svelte
-npm install
-npm run dev
+npm run dev -- --host --port 4173
 ```
 
 ### Running all apps together
 
-From the repository root, you can start all three examples at once using npm scripts defined in the top-level `package.json`:
+From the repository root, you can start the Vue example using npm scripts defined in the top-level `package.json`:
 
 ```bash
 npm install
-npm run start:all
+npm run start:vue
 ```
-
-Each app runs on its own port (`react`: 3000, `vue`: 4173, `svelte`: 4174) so they won't conflict with one another.
 
 ## Benchmarking
 
-Each TodoMVC implementation provides the same functionality, making them ideal for performance comparisons. You can benchmark:
+Each app aims to provide the same functionality, making them ideal for performance comparisons. You can benchmark:
 
 - Initial load time
 - Runtime performance
@@ -79,4 +61,4 @@ Each TodoMVC implementation provides the same functionality, making them ideal f
 
 ## License
 
-See individual submodules for their respective licenses.
+See individual app folders for their respective licenses.

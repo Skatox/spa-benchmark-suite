@@ -1,0 +1,27 @@
+:root {
+  color: #373a3c;
+}
+
+.container.page {
+  padding-top: 30px;
+}
+
+.navbar .container {
+  padding: 0;
+}
+
+.error-messages {
+  margin-top: 1rem;
+}
+
+.article-actions button + button {
+  margin-left: 0.5rem;
+}
+
+.tag-pill.tag-default {
+  cursor: pointer;
+}
+
+.comment-form textarea {
+  min-height: 120px;
+}
