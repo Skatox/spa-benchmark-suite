@@ -6,10 +6,11 @@ import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
 import RegisterPage from './pages/RegisterPage'
 import SettingsPage from './pages/SettingsPage'
-import { useAuth } from './contexts/AuthContext'
+import { useEffect } from 'react'
+import { useAuthStore } from './stores/authStore'
 
 const RequireAuth = () => {
-  const { isAuthenticated, loading, bootstrapped } = useAuth()
+  const { isAuthenticated, loading, bootstrapped } = useAuthStore()
   const location = useLocation()
 
   if (!bootstrapped || loading)
@@ -19,7 +20,7 @@ const RequireAuth = () => {
 }
 
 const NavBar = () => {
-  const { isAuthenticated, user, logout } = useAuth()
+  const { isAuthenticated, user, logout } = useAuthStore()
   const navigate = useNavigate()
 
   return (
@@ -59,6 +60,12 @@ const NavBar = () => {
 }
 
 function App() {
+  const bootstrap = useAuthStore((state) => state.bootstrap)
+
+  useEffect(() => {
+    bootstrap()
+  }, [bootstrap])
+
   return (
     <div>
       <NavBar />

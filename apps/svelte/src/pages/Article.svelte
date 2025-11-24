@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import { articles as articleApi } from '../services/api'
-  import { token, user } from '../stores/auth'
+  import { authStore } from '../stores/auth'
   import { get } from 'svelte/store'
   import CommentList from '../components/CommentList.svelte'
   import { push } from 'svelte-spa-router'
@@ -10,29 +10,32 @@
   let article
 
   async function loadArticle() {
-    const response = await articleApi.get(params.slug, get(token) || undefined)
+    const response = await articleApi.get(params.slug, get(authStore).token || undefined)
     article = response.article
   }
 
   onMount(loadArticle)
 
   async function toggleFavorite() {
-    if (!get(token)) return
+    const currentToken = get(authStore).token
+    if (!currentToken) return
     const method = article.favorited ? articleApi.unfavorite : articleApi.favorite
-    const response = await method(get(token), article.slug)
+    const response = await method(currentToken, article.slug)
     article = response.article
   }
 
   async function toggleFollow() {
-    if (!get(token)) return
+    const currentToken = get(authStore).token
+    if (!currentToken) return
     const method = article.author.following ? articleApi.unfollow : articleApi.follow
-    const response = await method(get(token), article.author.username)
+    const response = await method(currentToken, article.author.username)
     article = { ...article, author: response.profile }
   }
 
   async function removeArticle() {
-    if (!get(token)) return
-    await articleApi.delete(get(token), article.slug)
+    const currentToken = get(authStore).token
+    if (!currentToken) return
+    await articleApi.delete(currentToken, article.slug)
     push('/')
   }
 </script>
@@ -52,7 +55,7 @@
           </div>
           <button class="btn small" on:click={toggleFollow}>{article.author.following ? 'Unfollow' : 'Follow'} {article.author.username}</button>
           <button class="btn small" on:click={toggleFavorite}>❤ {article.favoritesCount}</button>
-          {#if $user?.username === article.author.username}
+          {#if $authStore.user?.username === article.author.username}
             <a class="btn small" href={`/editor/${article.slug}`}>Edit Article</a>
             <button class="btn small" on:click={removeArticle}>Delete Article</button>
           {/if}

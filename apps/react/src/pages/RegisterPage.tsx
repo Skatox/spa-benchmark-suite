@@ -1,9 +1,11 @@
 import { FormEvent, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuthStore } from '../stores/authStore'
 
 const RegisterPage = () => {
-  const { register, error, loading } = useAuth()
+  const register = useAuthStore((state) => state.register)
+  const error = useAuthStore((state) => state.error)
+  const loading = useAuthStore((state) => state.loading)
   const navigate = useNavigate()
   const location = useLocation()
   const redirect = new URLSearchParams(location.search).get('redirect') || '/'

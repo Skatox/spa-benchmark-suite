@@ -2,13 +2,14 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import ArticlePreview from '../components/ArticlePreview'
 import { favoriteArticle, fetchArticles, fetchProfile, followUser, type Article, type Profile } from '../services/api'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuthStore } from '../stores/authStore'
 
 const ProfilePage = () => {
   const { username } = useParams()
   const location = useLocation()
   const navigate = useNavigate()
-  const { user, isAuthenticated } = useAuth()
+  const user = useAuthStore((state) => state.user)
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const [profile, setProfile] = useState<Profile | null>(null)
   const [articles, setArticles] = useState<Article[]>([])
   const [loading, setLoading] = useState(false)

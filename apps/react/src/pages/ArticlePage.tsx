@@ -12,12 +12,13 @@ import {
   type Article,
   type Comment,
 } from '../services/api'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuthStore } from '../stores/authStore'
 
 const ArticlePage = () => {
   const { slug } = useParams()
   const navigate = useNavigate()
-  const { isAuthenticated, user } = useAuth()
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const user = useAuthStore((state) => state.user)
   const [article, setArticle] = useState<Article | null>(null)
   const [comments, setComments] = useState<Comment[]>([])
   const [loading, setLoading] = useState(true)

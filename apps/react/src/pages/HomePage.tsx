@@ -2,12 +2,12 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ArticlePreview from '../components/ArticlePreview'
 import { favoriteArticle, fetchArticles, fetchTags, fetchUserFeed, type Article } from '../services/api'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuthStore } from '../stores/authStore'
 
 type FeedType = 'global' | 'personal' | 'tag'
 
 const HomePage = () => {
-  const { isAuthenticated } = useAuth()
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
   const navigate = useNavigate()
   const [feedType, setFeedType] = useState<FeedType>('global')
   const [selectedTag, setSelectedTag] = useState<string | null>(null)

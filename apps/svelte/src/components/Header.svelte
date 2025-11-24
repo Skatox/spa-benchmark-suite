@@ -1,8 +1,8 @@
 <script>
-  import { user } from '../stores/auth'
   import { derived } from 'svelte/store'
+  import { authStore } from '../stores/auth'
 
-  const username = derived(user, ($user) => $user?.username)
+  const username = derived(authStore, ($auth) => $auth.user?.username)
 </script>
 
 <header class="navbar">
