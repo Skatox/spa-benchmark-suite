@@ -1,5 +1,5 @@
 <script>
-  import { token } from '../stores/auth'
+  import { authStore } from '../stores/auth'
   import { articles as articleApi, profiles as profilesApi } from '../services/api'
   import { createEventDispatcher } from 'svelte'
   import { get } from 'svelte/store'
@@ -7,19 +7,19 @@
   export let article
   const dispatch = createEventDispatcher()
 
-  const currentToken = token
-
   async function toggleFavorite() {
-    if (!get(currentToken)) return dispatch('favorite', article)
+    const currentToken = get(authStore).token
+    if (!currentToken) return dispatch('favorite', article)
     const method = article.favorited ? articleApi.unfavorite : articleApi.favorite
-    const response = await method(get(currentToken), article.slug)
+    const response = await method(currentToken, article.slug)
     dispatch('favorite', response.article)
   }
 
   async function toggleFollow() {
-    if (!get(currentToken)) return
+    const currentToken = get(authStore).token
+    if (!currentToken) return
     const method = article.author.following ? profilesApi.unfollow : profilesApi.follow
-    const response = await method(get(currentToken), article.author.username)
+    const response = await method(currentToken, article.author.username)
     article = { ...article, author: response.profile }
   }
 </script>

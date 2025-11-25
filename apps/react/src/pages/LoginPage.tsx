@@ -1,9 +1,11 @@
 import { FormEvent, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuthStore } from '../stores/authStore'
 
 const LoginPage = () => {
-  const { login, error, loading } = useAuth()
+  const login = useAuthStore((state) => state.login)
+  const error = useAuthStore((state) => state.error)
+  const loading = useAuthStore((state) => state.loading)
   const navigate = useNavigate()
   const location = useLocation()
   const searchParams = new URLSearchParams(location.search)

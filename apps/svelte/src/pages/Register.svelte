@@ -1,5 +1,5 @@
 <script>
-  import { register } from '../stores/auth'
+  import { authStore } from '../stores/auth'
   import { push } from 'svelte-spa-router'
 
   let username = ''
@@ -11,7 +11,7 @@
     event.preventDefault()
     errors = null
     try {
-      await register(username, email, password)
+      await authStore.register(username, email, password)
       push('/')
     } catch (err) {
       errors = err

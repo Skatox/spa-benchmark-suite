@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import { profiles as profilesApi, articles as articleApi } from '../services/api'
-  import { token, user } from '../stores/auth'
+  import { authStore } from '../stores/auth'
   import { get } from 'svelte/store'
   import ArticlePreview from '../components/ArticlePreview.svelte'
   import Pagination from '../components/Pagination.svelte'
@@ -15,7 +15,7 @@
   const limit = 5
 
   async function loadProfile() {
-    const response = await profilesApi.get(params.username, get(token) || undefined)
+    const response = await profilesApi.get(params.username, get(authStore).token || undefined)
     profile = response.profile
   }
 
@@ -26,7 +26,7 @@
     } else {
       query.author = params.username
     }
-    const response = await articleApi.list(query, get(token) || undefined)
+    const response = await articleApi.list(query, get(authStore).token || undefined)
     articles = response.articles
     articlesCount = response.articlesCount
   }
@@ -37,9 +37,10 @@
   })
 
   async function toggleFollow() {
-    if (!get(token)) return
+    const currentToken = get(authStore).token
+    if (!currentToken) return
     const method = profile.following ? profilesApi.unfollow : profilesApi.follow
-    const response = await method(get(token), params.username)
+    const response = await method(currentToken, params.username)
     profile = response.profile
   }
 
@@ -66,7 +67,7 @@
       <img src={profile.image || 'https://static.productionready.io/images/smiley-cyrus.jpg'} alt={profile.username} width="100" height="100" style="border-radius: 50%;" />
       <h2>{profile.username}</h2>
       <p>{profile.bio}</p>
-      {#if $user?.username !== profile.username}
+      {#if $authStore.user?.username !== profile.username}
         <button class="btn" on:click={toggleFollow}>{profile.following ? 'Unfollow' : 'Follow'} {profile.username}</button>
       {/if}
     </div>

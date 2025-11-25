@@ -1,26 +1,25 @@
 <script>
-  import { user, token, updateUser, logout } from '../stores/auth'
+  import { authStore } from '../stores/auth'
   import { push } from 'svelte-spa-router'
-  import { get } from 'svelte/store'
 
-  let image = $user?.image || ''
-  let username = $user?.username || ''
-  let bio = $user?.bio || ''
-  let email = $user?.email || ''
+  let image = $authStore.user?.image || ''
+  let username = $authStore.user?.username || ''
+  let bio = $authStore.user?.bio || ''
+  let email = $authStore.user?.email || ''
   let password = ''
   let errors = null
 
-  $: if ($user && !username) {
-    image = $user.image || ''
-    username = $user.username
-    bio = $user.bio || ''
-    email = $user.email
+  $: if ($authStore.user && !username) {
+    image = $authStore.user.image || ''
+    username = $authStore.user.username
+    bio = $authStore.user.bio || ''
+    email = $authStore.user.email
   }
 
   async function submit(event) {
     event.preventDefault()
     try {
-      await updateUser(get(token), { image, username, bio, email, ...(password ? { password } : {}) })
+      await authStore.updateProfile({ image, username, bio, email, ...(password ? { password } : {}) })
       push('/')
     } catch (err) {
       errors = err
@@ -57,5 +56,5 @@
     <button class="btn primary" type="submit">Update Settings</button>
   </form>
   <hr />
-  <button class="btn" on:click={() => { logout(); push('/') }}>Or click here to logout.</button>
+  <button class="btn" on:click={() => { authStore.logout(); push('/') }}>Or click here to logout.</button>
 </div>

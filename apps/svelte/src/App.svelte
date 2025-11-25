@@ -4,12 +4,10 @@
   import routes from './routes'
   import Header from './components/Header.svelte'
   import Footer from './components/Footer.svelte'
-  import { token, loadUser } from './stores/auth'
-  import { get } from 'svelte/store'
+  import { authStore } from './stores/auth'
 
   onMount(() => {
-    const existingToken = get(token)
-    if (existingToken) loadUser(existingToken)
+    authStore.bootstrap()
   })
 </script>
 

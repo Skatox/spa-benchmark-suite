@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import { articles as articleApi } from '../services/api'
-  import { token } from '../stores/auth'
+  import { authStore } from '../stores/auth'
   import { get } from 'svelte/store'
   import { push } from 'svelte-spa-router'
 
@@ -16,7 +16,7 @@
 
   onMount(async () => {
     if (slug) {
-      const response = await articleApi.get(slug, get(token) || undefined)
+      const response = await articleApi.get(slug, get(authStore).token || undefined)
       const article = response.article
       title = article.title
       description = article.description
@@ -43,9 +43,9 @@
     try {
       let response
       if (slug) {
-        response = await articleApi.update(get(token), slug, payload)
+        response = await articleApi.update(get(authStore).token, slug, payload)
       } else {
-        response = await articleApi.create(get(token), payload)
+        response = await articleApi.create(get(authStore).token, payload)
       }
       push(`/article/${response.article.slug}`)
     } catch (err) {

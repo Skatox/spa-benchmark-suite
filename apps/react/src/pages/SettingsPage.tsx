@@ -1,9 +1,13 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../contexts/AuthContext'
+import { useAuthStore } from '../stores/authStore'
 
 const SettingsPage = () => {
-  const { user, updateProfile, logout, loading, error } = useAuth()
+  const user = useAuthStore((state) => state.user)
+  const updateProfile = useAuthStore((state) => state.updateProfile)
+  const logout = useAuthStore((state) => state.logout)
+  const loading = useAuthStore((state) => state.loading)
+  const error = useAuthStore((state) => state.error)
   const navigate = useNavigate()
 
   const [image, setImage] = useState('')

@@ -4,7 +4,7 @@
   import TagSidebar from '../components/TagSidebar.svelte'
   import Pagination from '../components/Pagination.svelte'
   import { articles as articleApi } from '../services/api'
-  import { token, user } from '../stores/auth'
+  import { authStore } from '../stores/auth'
   import { get } from 'svelte/store'
 
   let articles = []
@@ -19,9 +19,9 @@
     if (selectedTag) params.tag = selectedTag
     let response
     if (feed === 'personal') {
-      response = await articleApi.feed(params, get(token))
+      response = await articleApi.feed(params, get(authStore).token)
     } else {
-      response = await articleApi.list(params, get(token) || undefined)
+      response = await articleApi.list(params, get(authStore).token || undefined)
     }
     articles = response.articles
     articlesCount = response.articlesCount
@@ -65,7 +65,7 @@
   <div>
     <div class="feed-toggle">
       <ul>
-        {#if $user}
+        {#if $authStore.user}
           <li class:active={feed === 'personal'}><a href="javascript:void(0)" on:click={() => selectFeed('personal')}>Your Feed</a></li>
         {/if}
         <li class:active={feed === 'global'}><a href="javascript:void(0)" on:click={() => selectFeed('global')}>Global Feed</a></li>

@@ -1,6 +1,7 @@
 import js from '@eslint/js'
 import globals from 'globals'
 import svelte from 'eslint-plugin-svelte'
+import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default [
   {
@@ -17,7 +18,8 @@ export default [
     },
     plugins: { svelte },
     rules: {
-      ...svelte.configs['flat/recommended'].rules
+      ...svelte.configs['flat/recommended'].rules,
+      ...eslintConfigPrettier.rules
     }
   },
   {
