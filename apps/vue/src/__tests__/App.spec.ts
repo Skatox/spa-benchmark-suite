@@ -8,6 +8,8 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/', component: { template: '<div>Home</div>' } },
+    { path: '/login', component: { template: '<div>Login</div>' } },
+    { path: '/register', component: { template: '<div>Register</div>' } },
   ],
 })
 
