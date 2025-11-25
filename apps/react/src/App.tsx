@@ -22,22 +22,33 @@ const RequireAuth = () => {
 const NavBar = () => {
   const { isAuthenticated, user, logout } = useAuthStore()
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const isActive = (path: string) => location.pathname === path
+  const isEditorActive = location.pathname.startsWith('/editor')
+  const isProfileActive = user && location.pathname.startsWith(`/profile/${user.username}`)
 
   return (
-    <nav className="navbar">
-      <div className="container" style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Link to="/" className="logo">
+    <header className="navbar">
+      <div className="container navbar-content">
+        <Link to="/" className="navbar-logo">
           conduit
         </Link>
-        <div className="nav-links">
-          <Link to="/">Home</Link>
+        <nav className="navbar-links">
+          <Link className={`navbar-link ${isActive('/') ? 'active' : ''}`} to="/">
+            Home
+          </Link>
           {isAuthenticated ? (
             <>
-              <Link to="/editor">New Article</Link>
-              <Link to="/settings">Settings</Link>
+              <Link className={`navbar-link ${isEditorActive ? 'active' : ''}`} to="/editor">
+                New Article
+              </Link>
+              <Link className={`navbar-link ${isActive('/settings') ? 'active' : ''}`} to="/settings">
+                Settings
+              </Link>
               <button
                 type="button"
-                className="link-button"
+                className={`navbar-link navbar-button ${isProfileActive ? 'active' : ''}`}
                 onClick={() => {
                   logout()
                   navigate('/login')
@@ -45,17 +56,26 @@ const NavBar = () => {
               >
                 Logout
               </button>
-              <Link to={`/profile/${user?.username}`}>{user?.username}</Link>
+              <Link
+                className={`navbar-link ${isProfileActive ? 'active' : ''}`}
+                to={`/profile/${user?.username}`}
+              >
+                {user?.username}
+              </Link>
             </>
           ) : (
             <>
-              <Link to="/login">Sign in</Link>
-              <Link to="/register">Sign up</Link>
+              <Link className={`navbar-link ${isActive('/login') ? 'active' : ''}`} to="/login">
+                Sign in
+              </Link>
+              <Link className={`navbar-link ${isActive('/register') ? 'active' : ''}`} to="/register">
+                Sign up
+              </Link>
             </>
           )}
-        </div>
+        </nav>
       </div>
-    </nav>
+    </header>
   )
 }
 
