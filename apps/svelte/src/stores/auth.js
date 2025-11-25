@@ -4,13 +4,22 @@ import { auth as authApi } from '../services/api'
 const storedUser = typeof localStorage !== 'undefined' ? localStorage.getItem('user') : null
 const storedToken = typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null
 
-const initialState = {
-  user: storedUser ? JSON.parse(storedUser) : null,
-  token: storedToken || '',
+const baseState = () => ({
+  user: null,
+  token: '',
   loading: false,
   error: null,
   bootstrapped: false
-}
+})
+
+const initialState = (() => {
+  const state = baseState()
+
+  state.user = storedUser ? JSON.parse(storedUser) : null
+  state.token = storedToken || ''
+
+  return state
+})()
 
 const persistSession = (user, token) => {
   if (typeof localStorage === 'undefined') return
@@ -40,7 +49,7 @@ function createAuthStore() {
 
   const clearSession = () => {
     persistSession(null, '')
-    store.set({ ...initialState, bootstrapped: true })
+    store.set({ ...baseState(), bootstrapped: true })
   }
 
   return {
