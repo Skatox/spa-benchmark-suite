@@ -1,7 +1,8 @@
 :root {
-  font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
-  background-color: #f5f5f5;
-  color: #373a3c;
+  color-scheme: light;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  color: #2c3e50;
+  background-color: #f8f8f8;
 }
 
 a {
@@ -10,35 +11,62 @@ a {
 }
 
 a:hover {
-  color: #3d8b3d;
+  text-decoration: underline;
 }
 
 body {
   margin: 0;
-  padding: 0;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 .container {
-  max-width: 1140px;
+  width: min(1100px, 90vw);
   margin: 0 auto;
-  padding: 0 15px;
 }
 
 .navbar {
-  background: #fff;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 12px 0;
+  background-color: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.navbar .logo {
-  font-weight: 700;
-  font-size: 20px;
-}
-
-.nav-links {
+.navbar-content {
   display: flex;
-  gap: 15px;
   align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.navbar-logo {
+  font-weight: 700;
+  color: #5cb85c;
+  font-size: 1.35rem;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-link {
+  color: #555;
+  font-weight: 500;
+}
+
+.navbar-link.active {
+  color: #5cb85c;
 }
 
 .banner {

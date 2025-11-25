@@ -69,6 +69,14 @@ select {
   color: #5cb85c;
 }
 
+.navbar-button {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
 .hero {
   background: #5cb85c;
   color: #fff;
