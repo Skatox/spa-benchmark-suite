@@ -82,6 +82,11 @@ function App() {
         <Route path="/profile/:username" element={<ProfilePage />} />
         <Route path="/profile/:username/favorites" element={<ProfilePage />} />
       </Routes>
+      <footer className="hero" style={{ marginTop: '3rem' }}>
+        <div className="container">
+          <p>RealWorld implementation built with Vue 3, Vite, and Pinia.</p>
+        </div>
+      </footer>
     </div>
   )
 }
