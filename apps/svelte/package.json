@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "npm run type-check && vite build",
     "preview": "vite preview",
+    "serve:prod": "PORT=${PORT:-4173} vite preview --host 0.0.0.0 --port $PORT",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "type-check": "svelte-check --tsconfig ./tsconfig.json",
     "test:unit": "vitest",

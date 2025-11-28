@@ -15,6 +15,7 @@ const LIGHTHOUSE_BIN = path.resolve(__dirname, '../node_modules/.bin/lighthouse'
 const SERVER_READY_TIMEOUT_MS = 20000;
 const SERVER_POLL_INTERVAL_MS = 500;
 const SHUTDOWN_GRACE_MS = 500;
+const SERVE_SCRIPT = 'serve:prod';
 
 function runCommand(cwd, command) {
   return new Promise((resolve, reject) => {
@@ -110,8 +111,12 @@ async function main() {
       console.log(`Construyendo ${app.name}...`);
       await runCommand(app.path, 'npm run build');
 
-      console.log(`Levantando servidor de preview para ${app.name}...`);
-      serverProcess = spawn('npm', ['run', 'dev'], { cwd: app.path, stdio: 'inherit' });
+      console.log(`Levantando servidor de preview para ${app.name} en el puerto ${app.port}...`);
+      serverProcess = spawn('npm', ['run', SERVE_SCRIPT], {
+        cwd: app.path,
+        stdio: 'inherit',
+        env: { ...process.env, PORT: String(app.port) },
+      });
 
       await waitForServer(app.port);
       console.log(`Servidor listo en http://localhost:${app.port}/`);
