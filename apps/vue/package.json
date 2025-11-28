@@ -10,6 +10,7 @@
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
+    "serve:prod": "PORT=${PORT:-4173} vite preview --host 0.0.0.0 --port $PORT",
     "test:unit": "vitest",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
