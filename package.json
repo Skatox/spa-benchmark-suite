@@ -8,6 +8,7 @@
     "start:all": "concurrently -k -n react,vue,svelte -c blue,green,magenta \"npm run start:react\" \"npm run start:vue\" \"npm run start:svelte\""
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "lighthouse": "^12.1.0"
   }
 }
