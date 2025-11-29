@@ -1,10 +1,10 @@
 # spa-benchmark-suite
 
-A benchmark suite for comparing SPA (Single Page Application) frameworks using TodoMVC examples.
+A benchmark suite for comparing SPA (Single Page Application) frameworks using RealWorld App examples.
 
 ## Overview
 
-This repository contains TodoMVC implementations for React, Vue, and Svelte to facilitate performance benchmarking and comparison between these popular SPA frameworks.
+This repository contains RealWorld App implementations for React, Vue, and Svelte to facilitate performance benchmarking and comparison between these popular SPA frameworks.
 
 ## Structure
 
@@ -69,7 +69,7 @@ Each app runs on its own port (`react`: 3000, `vue`: 3001, `svelte`: 3002) so th
 
 ## Benchmarking
 
-Each TodoMVC implementation provides the same functionality, making them ideal for performance comparisons. You can benchmark:
+Each RealWorld App implementation provides the same functionality, making them ideal for performance comparisons. You can benchmark:
 
 - Initial load time
 - Runtime performance
