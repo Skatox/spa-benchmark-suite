@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {},
-    "types": ["svelte"]
+    "types": ["svelte", "vitest/globals"]
   },
   "include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.svelte"],
   "exclude": ["node_modules/*"]
