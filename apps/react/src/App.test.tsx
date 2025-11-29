@@ -6,8 +6,20 @@ import App from './App'
 const bootstrap = vi.fn()
 const logout = vi.fn()
 
+type AuthStoreState = {
+  user: null
+  loading: boolean
+  bootstrapped: boolean
+  isAuthenticated: boolean
+  bootstrap: () => void
+  login: () => void
+  register: () => void
+  logout: () => void
+  updateProfile: () => void
+}
+
 vi.mock('./stores/authStore', () => {
-  const state = {
+  const state: AuthStoreState = {
     user: null,
     loading: false,
     bootstrapped: true,
@@ -20,7 +32,7 @@ vi.mock('./stores/authStore', () => {
   }
 
   return {
-    useAuthStore: (selector?: (state: typeof state) => unknown) =>
+    useAuthStore: (selector?: (state: AuthStoreState) => unknown) =>
       selector ? selector(state) : state,
   }
 })
