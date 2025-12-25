@@ -2,11 +2,30 @@ const { exec, spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
+const https = require('https');
 
 const APPS = [
-  { name: 'react', path: path.resolve(__dirname, '../apps/react'), port: 3000 },
-  { name: 'vue', path: path.resolve(__dirname, '../apps/vue'), port: 3001 },
-  { name: 'svelte', path: path.resolve(__dirname, '../apps/svelte'), port: 3002 },
+  {
+    name: 'react',
+    path: path.resolve(__dirname, '../apps/react'),
+    port: 3000,
+    npmPackage: 'react',
+    github: { owner: 'facebook', repo: 'react' },
+  },
+  {
+    name: 'vue',
+    path: path.resolve(__dirname, '../apps/vue'),
+    port: 3001,
+    npmPackage: 'vue',
+    github: { owner: 'vuejs', repo: 'core' },
+  },
+  {
+    name: 'svelte',
+    path: path.resolve(__dirname, '../apps/svelte'),
+    port: 3002,
+    npmPackage: 'svelte',
+    github: { owner: 'sveltejs', repo: 'svelte' },
+  },
 ];
 
 const LIGHTHOUSE_RUNS = 5;
@@ -15,7 +34,11 @@ const LIGHTHOUSE_BIN = path.resolve(__dirname, '../node_modules/.bin/lighthouse'
 const SERVER_READY_TIMEOUT_MS = 20000;
 const SERVER_POLL_INTERVAL_MS = 500;
 const SHUTDOWN_GRACE_MS = 500;
-const SERVE_SCRIPT = 'serve:prod';
+const FRAMEWORK_STATS_PATH = path.join(RESULTS_DIR, 'framework-stats.json');
+
+function resolveNpmCommand() {
+  return process.platform === 'win32' ? 'npm.cmd' : 'npm';
+}
 
 function runCommand(cwd, command) {
   return new Promise((resolve, reject) => {
@@ -37,6 +60,154 @@ function runCommand(cwd, command) {
       reject(new Error(`Failed to start command '${command}': ${err.message}`));
     });
   });
+}
+
+function formatBytes(bytes) {
+  if (!Number.isFinite(bytes)) {
+    return 'n/a';
+  }
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let value = bytes;
+  let unitIndex = 0;
+  while (value >= 1024 && unitIndex < units.length - 1) {
+    value /= 1024;
+    unitIndex += 1;
+  }
+  return `${value.toFixed(value < 10 && unitIndex > 0 ? 2 : 1)} ${units[unitIndex]}`;
+}
+
+function getDirectorySize(targetPath) {
+  if (!fs.existsSync(targetPath)) {
+    return 0;
+  }
+  const stat = fs.statSync(targetPath);
+  if (stat.isFile()) {
+    return stat.size;
+  }
+  if (stat.isDirectory()) {
+    return fs.readdirSync(targetPath).reduce((total, entry) => {
+      const entryPath = path.join(targetPath, entry);
+      return total + getDirectorySize(entryPath);
+    }, 0);
+  }
+  return 0;
+}
+
+function getBundleSize(app) {
+  const distPath = path.join(app.path, 'dist');
+  const bytes = getDirectorySize(distPath);
+  return {
+    bytes,
+    pretty: formatBytes(bytes),
+    distPath,
+  };
+}
+
+function fetchJson(url, headers = {}) {
+  return new Promise((resolve, reject) => {
+    const req = https.get(
+      url,
+      {
+        headers: {
+          'User-Agent': 'spa-benchmark-suite',
+          Accept: 'application/json',
+          ...headers,
+        },
+      },
+      (res) => {
+        let data = '';
+        res.setEncoding('utf8');
+        res.on('data', (chunk) => {
+          data += chunk;
+        });
+        res.on('end', () => {
+          if (res.statusCode && res.statusCode >= 400) {
+            reject(new Error(`Request failed ${res.statusCode}: ${url}`));
+            return;
+          }
+          try {
+            resolve({ json: JSON.parse(data), headers: res.headers });
+          } catch (error) {
+            reject(new Error(`Failed to parse JSON from ${url}: ${error.message}`));
+          }
+        });
+      }
+    );
+    req.on('error', (error) => reject(error));
+  });
+}
+
+async function getNpmDownloads(packageName) {
+  const url = `https://api.npmjs.org/downloads/point/last-month/${encodeURIComponent(packageName)}`;
+  const { json } = await fetchJson(url);
+  return json && typeof json.downloads === 'number' ? json.downloads : null;
+}
+
+function parseLinkHeader(linkHeader) {
+  if (!linkHeader) {
+    return {};
+  }
+  return linkHeader.split(',').reduce((acc, part) => {
+    const match = part.match(/<([^>]+)>;\s*rel=\"([^\"]+)\"/);
+    if (match) {
+      acc[match[2]] = match[1];
+    }
+    return acc;
+  }, {});
+}
+
+async function getGithubRepoStats({ owner, repo }) {
+  const repoUrl = `https://api.github.com/repos/${owner}/${repo}`;
+  const { json: repoJson } = await fetchJson(repoUrl);
+  const stars = repoJson && typeof repoJson.stargazers_count === 'number' ? repoJson.stargazers_count : null;
+  const forks = repoJson && typeof repoJson.forks_count === 'number' ? repoJson.forks_count : null;
+  const defaultBranch = repoJson && repoJson.default_branch ? repoJson.default_branch : 'main';
+
+  const commitsUrl = `https://api.github.com/repos/${owner}/${repo}/commits?per_page=1&sha=${encodeURIComponent(
+    defaultBranch
+  )}`;
+  const { json: commitsJson, headers } = await fetchJson(commitsUrl);
+  const linkMap = parseLinkHeader(headers.link);
+  let commits = null;
+  if (linkMap.last) {
+    const match = linkMap.last.match(/[?&]page=(\d+)/);
+    commits = match ? Number(match[1]) : null;
+  } else if (Array.isArray(commitsJson)) {
+    commits = commitsJson.length;
+  }
+
+  return { stars, forks, commits, repo: `${owner}/${repo}` };
+}
+
+async function ensureDependencies(app) {
+  const nodeModulesPath = path.join(app.path, 'node_modules');
+  const lockPath = path.join(app.path, 'package-lock.json');
+  const npmCommand = resolveNpmCommand();
+
+  async function installDependencies() {
+    if (fs.existsSync(lockPath)) {
+      try {
+        await runCommand(app.path, `${npmCommand} ci`);
+        return;
+      } catch (error) {
+        console.warn(`${app.name}: npm ci falló, intentando npm install...`);
+      }
+    }
+
+    await runCommand(app.path, `${npmCommand} install`);
+  }
+
+  if (fs.existsSync(nodeModulesPath)) {
+    try {
+      await runCommand(app.path, `${npmCommand} ls --depth=0 --silent`);
+      return;
+    } catch (error) {
+      console.warn(`Dependencias incompletas para ${app.name}. Reinstalando...`);
+    }
+  }
+
+  console.log(`Instalando dependencias para ${app.name}...`);
+  await installDependencies();
 }
 
 function waitForServer(port, timeoutMs = SERVER_READY_TIMEOUT_MS) {
@@ -83,20 +254,45 @@ function resolveLighthouseCommand() {
 
 async function runLighthouse(app, lighthouseCommand) {
   let generated = 0;
+  let skipped = 0;
   for (let i = 1; i <= LIGHTHOUSE_RUNS; i += 1) {
     const outputPath = path.join(RESULTS_DIR, `${app.name}-run-${i}.json`);
+    if (fs.existsSync(outputPath)) {
+      console.log(`${app.name}: el archivo ${path.basename(outputPath)} ya existe, se omite esta corrida.`);
+      skipped += 1;
+      continue;
+    }
     const url = `http://localhost:${app.port}/`;
     const command = `${lighthouseCommand} ${url} --quiet --chrome-flags="--headless" --output=json --output-path="${outputPath}"`;
     await runCommand(process.cwd(), command);
     generated += 1;
   }
-  return generated;
+  return { generated, skipped };
+}
+
+function loadFrameworkStats() {
+  if (!fs.existsSync(FRAMEWORK_STATS_PATH)) {
+    return [];
+  }
+  try {
+    const raw = fs.readFileSync(FRAMEWORK_STATS_PATH, 'utf8');
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    console.warn(`No se pudo leer ${FRAMEWORK_STATS_PATH}, se reinicia el historial.`);
+    return [];
+  }
+}
+
+function saveFrameworkStats(stats) {
+  fs.writeFileSync(FRAMEWORK_STATS_PATH, JSON.stringify(stats, null, 2));
 }
 
 async function main() {
   fs.mkdirSync(RESULTS_DIR, { recursive: true });
   const summary = [];
   const { command: lighthouseCommand, usingLocal } = resolveLighthouseCommand();
+  const frameworkStats = loadFrameworkStats();
 
   if (usingLocal) {
     console.log(`Usando binario local de Lighthouse en ${LIGHTHOUSE_BIN}`);
@@ -106,22 +302,41 @@ async function main() {
     console.log(`\n=== Procesando ${app.name} ===`);
     let serverProcess;
     let generated = 0;
+    let skipped = 0;
+    let bundleSize;
+    let npmDownloads = null;
+    let githubStats = null;
 
     try {
+      await ensureDependencies(app);
       console.log(`Construyendo ${app.name}...`);
       await runCommand(app.path, 'npm run build');
+      bundleSize = getBundleSize(app);
+      console.log(`${app.name}: bundle en ${bundleSize.distPath} (${bundleSize.pretty})`);
+
+      try {
+        npmDownloads = await getNpmDownloads(app.npmPackage);
+      } catch (error) {
+        console.warn(`${app.name}: no se pudo obtener descargas de npm (${error.message})`);
+      }
+
+      try {
+        githubStats = await getGithubRepoStats(app.github);
+      } catch (error) {
+        console.warn(`${app.name}: no se pudo obtener stats de GitHub (${error.message})`);
+      }
 
       console.log(`Levantando servidor de preview para ${app.name} en el puerto ${app.port}...`);
-      serverProcess = spawn('npm', ['run', SERVE_SCRIPT], {
+      serverProcess = spawn(resolveNpmCommand(), ['run', 'preview', '--', '--host', '0.0.0.0', '--port', String(app.port)], {
         cwd: app.path,
         stdio: 'inherit',
-        env: { ...process.env, PORT: String(app.port) },
+        env: { ...process.env },
       });
 
       await waitForServer(app.port);
       console.log(`Servidor listo en http://localhost:${app.port}/`);
 
-      generated = await runLighthouse(app, lighthouseCommand);
+      ({ generated, skipped } = await runLighthouse(app, lighthouseCommand));
       console.log(`${app.name}: se generaron ${generated} archivos JSON en ${RESULTS_DIR}`);
     } catch (error) {
       console.error(`Error procesando ${app.name}: ${error.message}`);
@@ -135,16 +350,50 @@ async function main() {
       }
     }
 
-    summary.push({ name: app.name, generated });
+    if (bundleSize) {
+      frameworkStats.push({
+        framework: app.name,
+        timestamp: new Date().toISOString(),
+        bundleBytes: bundleSize.bytes,
+        bundlePretty: bundleSize.pretty,
+        distPath: bundleSize.distPath,
+        npmPackage: app.npmPackage,
+        npmDownloads,
+        github: githubStats,
+      });
+    }
+
+    summary.push({
+      name: app.name,
+      generated,
+      skipped,
+      bundleSize,
+      npmDownloads,
+      githubStats,
+    });
   }
+
+  saveFrameworkStats(frameworkStats);
 
   console.log('\nResumen de Lighthouse:');
   for (const item of summary) {
-    if (item.generated > 0) {
-      console.log(`- ${item.name}: se generaron ${item.generated} archivos JSON en ${RESULTS_DIR}`);
-    } else {
-      console.log(`- ${item.name}: no se generaron archivos (ver errores anteriores)`);
+    if (item.generated > 0 || item.skipped > 0) {
+      const skippedMessage = item.skipped > 0 ? `, omitidos ${item.skipped} ya existentes` : '';
+      console.log(`- ${item.name}: se generaron ${item.generated} archivos JSON${skippedMessage} en ${RESULTS_DIR}`);
+      continue;
     }
+    console.log(`- ${item.name}: no se generaron archivos (ver errores anteriores)`);
+  }
+
+  console.log('\nResumen de bundle y repositorios:');
+  for (const item of summary) {
+    const bundleLabel = item.bundleSize ? item.bundleSize.pretty : 'n/a';
+    const npmLabel = typeof item.npmDownloads === 'number' ? item.npmDownloads.toLocaleString('en-US') : 'n/a';
+    const githubLabel =
+      item.githubStats && typeof item.githubStats.stars === 'number'
+        ? `${item.githubStats.repo} (stars ${item.githubStats.stars}, forks ${item.githubStats.forks}, commits ${item.githubStats.commits ?? 'n/a'})`
+        : 'n/a';
+    console.log(`- ${item.name}: bundle ${bundleLabel}, npm descargas (30d) ${npmLabel}, GitHub ${githubLabel}`);
   }
 }
 
