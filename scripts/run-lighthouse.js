@@ -31,6 +31,7 @@ const APPS = [
 const LIGHTHOUSE_RUNS = 5;
 const RESULTS_DIR = path.resolve(__dirname, '../results/lighthouse');
 const LIGHTHOUSE_BIN = path.resolve(__dirname, '../node_modules/.bin/lighthouse');
+const REUSE_EXISTING_RUNS = process.argv.includes('--reuse-existing');
 const SERVER_READY_TIMEOUT_MS = 20000;
 const SERVER_POLL_INTERVAL_MS = 500;
 const SHUTDOWN_GRACE_MS = 500;
@@ -258,9 +259,13 @@ async function runLighthouse(app, lighthouseCommand) {
   for (let i = 1; i <= LIGHTHOUSE_RUNS; i += 1) {
     const outputPath = path.join(RESULTS_DIR, `${app.name}-run-${i}.json`);
     if (fs.existsSync(outputPath)) {
-      console.log(`${app.name}: el archivo ${path.basename(outputPath)} ya existe, se omite esta corrida.`);
-      skipped += 1;
-      continue;
+      if (REUSE_EXISTING_RUNS) {
+        console.log(`${app.name}: el archivo ${path.basename(outputPath)} ya existe, se omite esta corrida.`);
+        skipped += 1;
+        continue;
+      }
+      fs.unlinkSync(outputPath);
+      console.log(`${app.name}: se elimina ${path.basename(outputPath)} para recalcular la corrida ${i}.`);
     }
     const url = `http://localhost:${app.port}/`;
     const command = `${lighthouseCommand} ${url} --quiet --chrome-flags="--headless" --output=json --output-path="${outputPath}"`;
@@ -296,6 +301,12 @@ async function main() {
 
   if (usingLocal) {
     console.log(`Usando binario local de Lighthouse en ${LIGHTHOUSE_BIN}`);
+  }
+
+  if (REUSE_EXISTING_RUNS) {
+    console.log('Modo de reutilización activo: se conservan resultados Lighthouse existentes.');
+  } else {
+    console.log('Modo limpio activo: los JSON Lighthouse existentes se reemplazarán para evitar mezclar mediciones antiguas.');
   }
 
   for (const app of APPS) {
