@@ -6,7 +6,8 @@
     "start:vue": "npm --prefix apps/vue run dev -- --host --port 3001",
     "start:svelte": "npm --prefix apps/svelte run dev -- --host --port 3002",
     "start:all": "concurrently -k -n react,vue,svelte -c blue,green,magenta \"npm run start:react\" \"npm run start:vue\" \"npm run start:svelte\"",
-    "lighthouse:run": "node scripts/run-lighthouse.js"
+    "lighthouse:run": "node scripts/run-lighthouse.js",
+    "benchmark:multi": "node scripts/run-benchmark-multi.js"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

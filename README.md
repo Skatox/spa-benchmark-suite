@@ -77,6 +77,27 @@ Each RealWorld App implementation provides the same functionality, making them i
 - Memory usage
 - And more...
 
+### Lighthouse + Excel report for multiple runs
+
+From the repository root you can run multiple benchmark batches and generate a timestamped Excel file:
+
+```bash
+npm install
+npm run benchmark:multi -- --iterations 3 --runs 5
+```
+
+This runs Lighthouse for each framework in every iteration and then generates a file like:
+
+```text
+results/lighthouse/benchmark-report-YYYY-MM-DDTHH-mm-ss-sssZ.xls
+```
+
+The Excel file includes:
+
+- `raw-runs`: one row per Lighthouse run (across all iterations).
+- `framework-averages`: averages per framework to help with decision-making.
+- `execution-meta`: metadata for each execution (generated/skipped files, bundle size).
+
 ## License
 
 See individual submodules for their respective licenses.
