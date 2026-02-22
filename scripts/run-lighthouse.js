@@ -37,6 +37,29 @@ const SERVER_POLL_INTERVAL_MS = 500;
 const SHUTDOWN_GRACE_MS = 500;
 const FRAMEWORK_STATS_PATH = path.join(RESULTS_DIR, 'framework-stats.json');
 
+function parseArgs(argv) {
+  const args = { batchId: null, runs: LIGHTHOUSE_RUNS };
+
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+    if (arg === '--batch-id') {
+      args.batchId = argv[i + 1] || null;
+      i += 1;
+      continue;
+    }
+    if (arg === '--runs') {
+      const value = Number(argv[i + 1]);
+      if (!Number.isFinite(value) || value <= 0) {
+        throw new Error('The value for --runs must be a positive integer.');
+      }
+      args.runs = Math.floor(value);
+      i += 1;
+    }
+  }
+
+  return args;
+}
+
 function resolveNpmCommand() {
   return process.platform === 'win32' ? 'npm.cmd' : 'npm';
 }
@@ -191,7 +214,7 @@ async function ensureDependencies(app) {
         await runCommand(app.path, `${npmCommand} ci`);
         return;
       } catch (error) {
-        console.warn(`${app.name}: npm ci falló, intentando npm install...`);
+        console.warn(`${app.name}: npm ci failed, trying npm install...`);
       }
     }
 
@@ -203,11 +226,11 @@ async function ensureDependencies(app) {
       await runCommand(app.path, `${npmCommand} ls --depth=0 --silent`);
       return;
     } catch (error) {
-      console.warn(`Dependencias incompletas para ${app.name}. Reinstalando...`);
+      console.warn(`Incomplete dependencies for ${app.name}. Reinstalling...`);
     }
   }
 
-  console.log(`Instalando dependencias para ${app.name}...`);
+  console.log(`Installing dependencies for ${app.name}...`);
   await installDependencies();
 }
 
@@ -247,17 +270,24 @@ function resolveLighthouseCommand() {
   }
 
   console.warn(
-    'Lighthouse no se encontró en node_modules/.bin. Se usará "npx lighthouse". ' +
-      'Instala la dependencia con "npm install --save-dev lighthouse" para evitar descargas en cada ejecución.'
+    'Lighthouse was not found in node_modules/.bin. "npx lighthouse" will be used. ' +
+      'Install the dependency with "npm install --save-dev lighthouse" to avoid downloads on every run.'
   );
   return { command: 'npx lighthouse', usingLocal: false };
 }
 
-async function runLighthouse(app, lighthouseCommand) {
+function buildRunOutputPath(appName, runIndex, batchId) {
+  const suffix = batchId ? `${batchId}-run-${runIndex}` : `run-${runIndex}`;
+  return path.join(RESULTS_DIR, `${appName}-${suffix}.json`);
+}
+
+async function runLighthouse(app, lighthouseCommand, options) {
   let generated = 0;
   let skipped = 0;
-  for (let i = 1; i <= LIGHTHOUSE_RUNS; i += 1) {
-    const outputPath = path.join(RESULTS_DIR, `${app.name}-run-${i}.json`);
+  const outputFiles = [];
+  for (let i = 1; i <= options.runs; i += 1) {
+    const outputPath = buildRunOutputPath(app.name, i, options.batchId);
+    outputFiles.push(outputPath);
     if (fs.existsSync(outputPath)) {
       if (REUSE_EXISTING_RUNS) {
         console.log(`${app.name}: el archivo ${path.basename(outputPath)} ya existe, se omite esta corrida.`);
@@ -272,7 +302,7 @@ async function runLighthouse(app, lighthouseCommand) {
     await runCommand(process.cwd(), command);
     generated += 1;
   }
-  return { generated, skipped };
+  return { generated, skipped, outputFiles };
 }
 
 function loadFrameworkStats() {
@@ -284,7 +314,7 @@ function loadFrameworkStats() {
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed) ? parsed : [];
   } catch (error) {
-    console.warn(`No se pudo leer ${FRAMEWORK_STATS_PATH}, se reinicia el historial.`);
+    console.warn(`Could not read ${FRAMEWORK_STATS_PATH}, history will be reset.`);
     return [];
   }
 }
@@ -294,13 +324,14 @@ function saveFrameworkStats(stats) {
 }
 
 async function main() {
+  const options = parseArgs(process.argv.slice(2));
   fs.mkdirSync(RESULTS_DIR, { recursive: true });
   const summary = [];
   const { command: lighthouseCommand, usingLocal } = resolveLighthouseCommand();
   const frameworkStats = loadFrameworkStats();
 
   if (usingLocal) {
-    console.log(`Usando binario local de Lighthouse en ${LIGHTHOUSE_BIN}`);
+    console.log(`Using local Lighthouse binary at ${LIGHTHOUSE_BIN}`);
   }
 
   if (REUSE_EXISTING_RUNS) {
@@ -310,7 +341,7 @@ async function main() {
   }
 
   for (const app of APPS) {
-    console.log(`\n=== Procesando ${app.name} ===`);
+    console.log(`\n=== Processing ${app.name} ===`);
     let serverProcess;
     let generated = 0;
     let skipped = 0;
@@ -320,24 +351,24 @@ async function main() {
 
     try {
       await ensureDependencies(app);
-      console.log(`Construyendo ${app.name}...`);
+      console.log(`Building ${app.name}...`);
       await runCommand(app.path, 'npm run build');
       bundleSize = getBundleSize(app);
-      console.log(`${app.name}: bundle en ${bundleSize.distPath} (${bundleSize.pretty})`);
+      console.log(`${app.name}: bundle at ${bundleSize.distPath} (${bundleSize.pretty})`);
 
       try {
         npmDownloads = await getNpmDownloads(app.npmPackage);
       } catch (error) {
-        console.warn(`${app.name}: no se pudo obtener descargas de npm (${error.message})`);
+        console.warn(`${app.name}: could not fetch npm downloads (${error.message})`);
       }
 
       try {
         githubStats = await getGithubRepoStats(app.github);
       } catch (error) {
-        console.warn(`${app.name}: no se pudo obtener stats de GitHub (${error.message})`);
+        console.warn(`${app.name}: could not fetch GitHub stats (${error.message})`);
       }
 
-      console.log(`Levantando servidor de preview para ${app.name} en el puerto ${app.port}...`);
+      console.log(`Starting preview server for ${app.name} on port ${app.port}...`);
       serverProcess = spawn(resolveNpmCommand(), ['run', 'preview', '--', '--host', '0.0.0.0', '--port', String(app.port)], {
         cwd: app.path,
         stdio: 'inherit',
@@ -345,12 +376,32 @@ async function main() {
       });
 
       await waitForServer(app.port);
-      console.log(`Servidor listo en http://localhost:${app.port}/`);
+      console.log(`Server ready at http://localhost:${app.port}/`);
 
-      ({ generated, skipped } = await runLighthouse(app, lighthouseCommand));
-      console.log(`${app.name}: se generaron ${generated} archivos JSON en ${RESULTS_DIR}`);
+      let outputFiles = [];
+      ({ generated, skipped, outputFiles } = await runLighthouse(app, lighthouseCommand, options));
+      console.log(`${app.name}: generated ${generated} JSON files in ${RESULTS_DIR}`);
+
+      summary.push({
+        name: app.name,
+        generated,
+        skipped,
+        bundleSize,
+        npmDownloads,
+        githubStats,
+        outputFiles,
+      });
     } catch (error) {
-      console.error(`Error procesando ${app.name}: ${error.message}`);
+      console.error(`Error processing ${app.name}: ${error.message}`);
+      summary.push({
+        name: app.name,
+        generated,
+        skipped,
+        bundleSize,
+        npmDownloads,
+        githubStats,
+        outputFiles: [],
+      });
     } finally {
       if (serverProcess) {
         serverProcess.kill();
@@ -374,29 +425,39 @@ async function main() {
       });
     }
 
-    summary.push({
-      name: app.name,
-      generated,
-      skipped,
-      bundleSize,
-      npmDownloads,
-      githubStats,
-    });
   }
 
   saveFrameworkStats(frameworkStats);
 
-  console.log('\nResumen de Lighthouse:');
+  const summaryTimestamp = new Date().toISOString();
+  const summaryLabel = options.batchId || summaryTimestamp.replace(/[:.]/g, '-');
+  const summaryPath = path.join(RESULTS_DIR, `summary-${summaryLabel}.json`);
+  fs.writeFileSync(
+    summaryPath,
+    JSON.stringify(
+      {
+        timestamp: summaryTimestamp,
+        batchId: options.batchId,
+        runsPerApp: options.runs,
+        resultsDir: RESULTS_DIR,
+        summary,
+      },
+      null,
+      2
+    )
+  );
+
+  console.log('\nLighthouse summary:');
   for (const item of summary) {
     if (item.generated > 0 || item.skipped > 0) {
-      const skippedMessage = item.skipped > 0 ? `, omitidos ${item.skipped} ya existentes` : '';
-      console.log(`- ${item.name}: se generaron ${item.generated} archivos JSON${skippedMessage} en ${RESULTS_DIR}`);
+      const skippedMessage = item.skipped > 0 ? `, skipped ${item.skipped} existing` : '';
+      console.log(`- ${item.name}: generated ${item.generated} JSON files${skippedMessage} in ${RESULTS_DIR}`);
       continue;
     }
-    console.log(`- ${item.name}: no se generaron archivos (ver errores anteriores)`);
+    console.log(`- ${item.name}: no files generated (see previous errors)`);
   }
 
-  console.log('\nResumen de bundle y repositorios:');
+  console.log('\nBundle and repository summary:');
   for (const item of summary) {
     const bundleLabel = item.bundleSize ? item.bundleSize.pretty : 'n/a';
     const npmLabel = typeof item.npmDownloads === 'number' ? item.npmDownloads.toLocaleString('en-US') : 'n/a';
@@ -404,8 +465,10 @@ async function main() {
       item.githubStats && typeof item.githubStats.stars === 'number'
         ? `${item.githubStats.repo} (stars ${item.githubStats.stars}, forks ${item.githubStats.forks}, commits ${item.githubStats.commits ?? 'n/a'})`
         : 'n/a';
-    console.log(`- ${item.name}: bundle ${bundleLabel}, npm descargas (30d) ${npmLabel}, GitHub ${githubLabel}`);
+    console.log(`- ${item.name}: bundle ${bundleLabel}, npm downloads (30d) ${npmLabel}, GitHub ${githubLabel}`);
   }
+
+  console.log(`\nSummary saved to: ${summaryPath}`);
 }
 
 main().catch((error) => {
