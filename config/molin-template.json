@@ -1,0 +1,37 @@
+{
+  "scale": {
+    "1": "muy deficiente",
+    "2": "deficiente",
+    "3": "aceptable",
+    "4": "bueno",
+    "5": "muy bueno"
+  },
+  "criteria": [
+    "rendimiento de caché",
+    "documentación",
+    "experiencia interna previa",
+    "integración",
+    "mantenibilidad",
+    "madurez",
+    "modificabilidad",
+    "modularidad",
+    "rendimiento",
+    "persistencia",
+    "popularidad",
+    "portabilidad",
+    "presentación o UI",
+    "confiabilidad",
+    "escalabilidad",
+    "seguridad",
+    "simplicidad",
+    "tamaño de la biblioteca",
+    "testeabilidad",
+    "transparencia",
+    "usabilidad para el desarrollador"
+  ],
+  "frameworks": {
+    "react": [],
+    "vue": [],
+    "svelte": []
+  }
+}

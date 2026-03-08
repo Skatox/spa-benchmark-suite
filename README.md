@@ -4,100 +4,108 @@ A benchmark suite for comparing SPA (Single Page Application) frameworks using R
 
 ## Overview
 
-This repository contains RealWorld App implementations for React, Vue, and Svelte to facilitate performance benchmarking and comparison between these popular SPA frameworks.
+This repository contains RealWorld App implementations for React, Vue, and Svelte, plus a reproducible benchmarking and qualitative-evaluation pipeline aligned with a Molin-style method for academic comparison.
 
 ## Structure
 
 ```
 apps/
-├── react/      - React implementation
-├── vue/        - Vue implementation
-└── svelte/     - Svelte implementation
+├── react/
+├── vue/
+└── svelte/
+config/
+├── benchmark.config.json      # Reproducible benchmark setup
+└── molin-template.json        # Qualitative matrix template (1-5)
+scripts/benchmark/
+├── pipeline.js                # Quantitative capture + persistence + stats
+├── stats.js                   # Descriptive statistics
+├── molin.js                   # Molin matrix validation and summary
+├── init-molin.js              # Creates editable Molin matrix file
+└── report.js                  # Final thesis-oriented report export
+results/
+└── benchmark/
 ```
-
-Each subfolder in `apps/` contains a standalone implementation of the RealWorld SPA for its respective framework.
 
 ## Getting Started
 
-### Cloning the Repository
-
-To clone this repository with all submodules:
-
-```bash
-git clone --recursive https://github.com/Skatox/spa-benchmark-suite.git
-```
-
-Or if you've already cloned the repository:
-
-```bash
-git submodule update --init --recursive
-```
-
-### Running the Examples
-
-#### React
-```bash
-cd apps/react
-npm install
-npm run dev -- --host --port 3000
-```
-
-#### Vue
-```bash
-cd apps/vue
-npm install
-npm run dev -- --host --port 3001
-```
-
-#### Svelte
-```bash
-cd apps/svelte
-npm install
-npm run dev -- --host --port 3002
-```
-
-### Running all apps together
-
-From the repository root, you can start all three examples at once using npm scripts defined in the top-level `package.json`:
+### Install dependencies
 
 ```bash
 npm install
+npm --prefix apps/react install
+npm --prefix apps/vue install
+npm --prefix apps/svelte install
+```
+
+### Start all frameworks in homogeneous conditions
+
+```bash
 npm run start:all
 ```
 
-Each app runs on its own port (`react`: 3000, `vue`: 3001, `svelte`: 3002) so they won't conflict with one another.
+## Methodological pipeline
 
-## Benchmarking
+### 1) Configure reproducible environment
 
-Each RealWorld App implementation provides the same functionality, making them ideal for performance comparisons. You can benchmark:
+Edit `config/benchmark.config.json` to define:
+- browser and cache mode (`cold`/`warm`)
+- network profile
+- runs per scenario
+- frameworks and URLs
+- scenario paths
 
-- Initial load time
-- Runtime performance
-- Bundle size
-- Memory usage
-- And more...
-
-### Lighthouse + Excel report for multiple runs
-
-From the repository root you can run multiple benchmark batches and generate a timestamped Excel file:
+### 2) Execute quantitative benchmark
 
 ```bash
-npm install
-npm run benchmark:multi -- --iterations 3 --runs 5
+npm run benchmark:pipeline
 ```
 
-This runs Lighthouse for each framework in every iteration and then generates a file like:
+This captures, per run and scenario:
+- Load: FCP, LCP, TTFB, CLS
+- Interaction: TTI, TBT, max-potential-FID (as input-delay equivalent)
+- Resources: CPU task duration (CDP), JS heap memory (CDP), total downloaded bytes
+- Metadata: framework, scenario, run number, timestamp, environment, observations
 
-```text
-results/lighthouse/benchmark-report-YYYY-MM-DDTHH-mm-ss-sssZ.xls
+Artifacts are stored in `results/benchmark/<runId>/raw/*.json` and `aggregated.json`.
+
+### 3) Create and fill Molin qualitative matrix (1-5)
+
+```bash
+npm run molin:init
 ```
 
-The Excel file includes:
+Then edit `results/molin-evaluation.json` and add all criteria scores with:
+- score 1..5
+- mandatory textual justification
+- mandatory evidence list (URLs, files, notes, quantitative references)
 
-- `raw-runs`: one row per Lighthouse run (across all iterations).
-- `framework-averages`: averages per framework to help with decision-making.
-- `execution-meta`: metadata for each execution (generated/skipped files, bundle size).
+### 4) Generate thesis report
 
-## License
+```bash
+npm run report:thesis
+```
 
-See individual submodules for their respective licenses.
+Exports in the latest benchmark run folder:
+- `thesis-report.md`
+- `quantitative-summary.csv`
+- `molin-summary.json`
+
+## Validation rules implemented
+
+- Qualitative entries are rejected if score is outside 1-5.
+- Qualitative entries are rejected without justification.
+- Qualitative entries are rejected without evidence.
+- Report generation fails if there is no minimum quantitative data.
+- Report generation fails if scenarios are incompatible across frameworks.
+- Missing quantitative metrics are surfaced as validity warnings.
+
+## Tests
+
+```bash
+npm test
+```
+
+Covers:
+- descriptive statistics
+- Molin justification/evidence mandatory constraints
+- minimum dataset and scenario-compatibility validations
