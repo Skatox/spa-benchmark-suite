@@ -1,0 +1,24 @@
+{
+  "environment": {
+    "browser": "chromium",
+    "headless": true,
+    "cacheMode": "cold",
+    "hardwareProfile": "local-default",
+    "networkProfile": {
+      "offline": false,
+      "downloadThroughput": 10485760,
+      "uploadThroughput": 5242880,
+      "latency": 40
+    }
+  },
+  "runsPerScenario": 3,
+  "frameworks": [
+    { "name": "react", "baseUrl": "http://localhost:3000" },
+    { "name": "vue", "baseUrl": "http://localhost:3001" },
+    { "name": "svelte", "baseUrl": "http://localhost:3002" }
+  ],
+  "scenarios": [
+    { "name": "home", "path": "/" },
+    { "name": "login", "path": "/login" }
+  ]
+}

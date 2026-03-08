@@ -7,7 +7,11 @@
     "start:svelte": "npm --prefix apps/svelte run dev -- --host --port 3002",
     "start:all": "concurrently -k -n react,vue,svelte -c blue,green,magenta \"npm run start:react\" \"npm run start:vue\" \"npm run start:svelte\"",
     "lighthouse:run": "node scripts/run-lighthouse.js",
-    "benchmark:multi": "node scripts/run-benchmark-multi.js"
+    "benchmark:multi": "node scripts/run-benchmark-multi.js",
+    "benchmark:pipeline": "node scripts/benchmark/pipeline.js",
+    "molin:init": "node scripts/benchmark/init-molin.js",
+    "report:thesis": "node scripts/benchmark/report.js",
+    "test": "node --test tests/*.test.js"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
