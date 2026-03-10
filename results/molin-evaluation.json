@@ -1,0 +1,649 @@
+{
+  "scale": {
+    "1": "muy deficiente",
+    "2": "deficiente",
+    "3": "aceptable",
+    "4": "bueno",
+    "5": "muy bueno"
+  },
+  "criteria": [
+    "rendimiento de caché",
+    "documentación",
+    "experiencia interna previa",
+    "integración",
+    "mantenibilidad",
+    "madurez",
+    "modificabilidad",
+    "modularidad",
+    "rendimiento",
+    "persistencia",
+    "popularidad",
+    "portabilidad",
+    "presentación o UI",
+    "confiabilidad",
+    "escalabilidad",
+    "seguridad",
+    "simplicidad",
+    "tamaño de la biblioteca",
+    "testeabilidad",
+    "transparencia",
+    "usabilidad para el desarrollador"
+  ],
+  "frameworks": {
+    "react": [
+      {
+        "criterion": "rendimiento de caché",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'rendimiento de caché' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: rendimiento de caché"
+        ]
+      },
+      {
+        "criterion": "documentación",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'documentación' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: documentación"
+        ]
+      },
+      {
+        "criterion": "experiencia interna previa",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'experiencia interna previa' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: experiencia interna previa"
+        ]
+      },
+      {
+        "criterion": "integración",
+        "score": 4,
+        "justification": "Integra React Router, Zustand y un cliente API tipado en una estructura coherente para este benchmark.",
+        "evidence": [
+          "apps/react/package.json",
+          "apps/react/src/App.tsx",
+          "apps/react/src/services/api.ts",
+          "apps/react/src/stores/authStore.ts"
+        ]
+      },
+      {
+        "criterion": "mantenibilidad",
+        "score": 4,
+        "justification": "Separa páginas, store y cliente API, y usa TypeScript, ESLint y Vitest para sostener cambios con menor riesgo.",
+        "evidence": [
+          "apps/react/package.json",
+          "apps/react/src/App.tsx",
+          "apps/react/src/services/api.ts",
+          "apps/react/src/stores/authStore.ts"
+        ]
+      },
+      {
+        "criterion": "madurez",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'madurez' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: madurez"
+        ]
+      },
+      {
+        "criterion": "modificabilidad",
+        "score": 4,
+        "justification": "Las responsabilidades están separadas por rutas, páginas y servicios, lo que facilita cambios localizados.",
+        "evidence": [
+          "apps/react/src/App.tsx",
+          "apps/react/src/services/api.ts",
+          "apps/react/src/stores/authStore.ts"
+        ]
+      },
+      {
+        "criterion": "modularidad",
+        "score": 4,
+        "justification": "La implementación divide navegación, vistas, estado y acceso a API en módulos distintos.",
+        "evidence": [
+          "apps/react/src/App.tsx",
+          "apps/react/src/services/api.ts",
+          "apps/react/src/stores/authStore.ts"
+        ]
+      },
+      {
+        "criterion": "rendimiento",
+        "score": 4,
+        "justification": "Queda segundo en el run del 10 de marzo de 2026 con promedios de FCP 6213.1 ms, LCP 10736.8 ms y TTI 11040.8 ms, mejor que Vue y por detrás de Svelte.",
+        "evidence": [
+          "results/benchmark/2026-03-10T00-59-57-160Z/aggregated.json",
+          "results/benchmark/2026-03-10T00-59-57-160Z/raw/react-home-run-1-lighthouse.json",
+          "results/benchmark/2026-03-10T00-59-57-160Z/raw/react-login-run-1-lighthouse.json"
+        ]
+      },
+      {
+        "criterion": "persistencia",
+        "score": 4,
+        "justification": "La sesión se restaura desde localStorage mediante bootstrap del store y uso del token en requests autenticados.",
+        "evidence": [
+          "apps/react/src/services/api.ts",
+          "apps/react/src/stores/authStore.ts",
+          "apps/react/src/App.tsx"
+        ]
+      },
+      {
+        "criterion": "popularidad",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'popularidad' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: popularidad"
+        ]
+      },
+      {
+        "criterion": "portabilidad",
+        "score": 4,
+        "justification": "Es una SPA Vite convencional con dependencia principal de la API HTTP de RealWorld y sin acoplamientos visibles a plataforma específica.",
+        "evidence": [
+          "apps/react/package.json",
+          "apps/react/src/services/api.ts"
+        ]
+      },
+      {
+        "criterion": "presentación o UI",
+        "score": 4,
+        "justification": "Implementa las pantallas y flujos principales de RealWorld con navegación, formularios y vistas protegidas.",
+        "evidence": [
+          "apps/react/src/App.tsx",
+          "apps/react/README.md",
+          "results/benchmark/2026-03-10T00-59-57-160Z/raw/react-home-run-1.json"
+        ]
+      },
+      {
+        "criterion": "confiabilidad",
+        "score": 4,
+        "justification": "Las corridas del benchmark son consistentes y el código gestiona bootstrap de sesión y errores de autenticación/API de forma explícita.",
+        "evidence": [
+          "results/benchmark/2026-03-10T00-59-57-160Z/aggregated.json",
+          "apps/react/src/services/api.ts",
+          "apps/react/src/stores/authStore.ts"
+        ]
+      },
+      {
+        "criterion": "escalabilidad",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'escalabilidad' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: escalabilidad"
+        ]
+      },
+      {
+        "criterion": "seguridad",
+        "score": 3,
+        "justification": "Protege rutas y agrega token a requests autenticados, pero almacena sesión en localStorage y no expone medidas adicionales de hardening en cliente.",
+        "evidence": [
+          "apps/react/src/App.tsx",
+          "apps/react/src/services/api.ts",
+          "apps/react/src/stores/authStore.ts"
+        ]
+      },
+      {
+        "criterion": "simplicidad",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'simplicidad' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: simplicidad"
+        ]
+      },
+      {
+        "criterion": "tamaño de la biblioteca",
+        "score": 3,
+        "justification": "El peso medio descargado es 1786209 bytes, intermedio entre Svelte y Vue en este run.",
+        "evidence": [
+          "results/benchmark/2026-03-10T00-59-57-160Z/aggregated.json",
+          "results/benchmark/2026-03-10T00-59-57-160Z/raw/react-home-run-1-lighthouse.json",
+          "apps/react/package.json"
+        ]
+      },
+      {
+        "criterion": "testeabilidad",
+        "score": 4,
+        "justification": "Tiene Vitest y Testing Library, y la separación entre UI, estado y API ayuda a aislar pruebas.",
+        "evidence": [
+          "apps/react/src/App.test.tsx",
+          "apps/react/package.json",
+          "apps/react/README.md"
+        ]
+      },
+      {
+        "criterion": "transparencia",
+        "score": 4,
+        "justification": "La lógica relevante está expresada en TypeScript con funciones y tipos explícitos para rutas, estado y API.",
+        "evidence": [
+          "apps/react/src/App.tsx",
+          "apps/react/src/services/api.ts",
+          "apps/react/src/stores/authStore.ts"
+        ]
+      },
+      {
+        "criterion": "usabilidad para el desarrollador",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'usabilidad para el desarrollador' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: usabilidad para el desarrollador"
+        ]
+      }
+    ],
+    "vue": [
+      {
+        "criterion": "rendimiento de caché",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'rendimiento de caché' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: rendimiento de caché"
+        ]
+      },
+      {
+        "criterion": "documentación",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'documentación' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: documentación"
+        ]
+      },
+      {
+        "criterion": "experiencia interna previa",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'experiencia interna previa' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: experiencia interna previa"
+        ]
+      },
+      {
+        "criterion": "integración",
+        "score": 4,
+        "justification": "Integra Vue Router, Pinia y cliente API tipado con guards de ruta y separación clara de responsabilidades.",
+        "evidence": [
+          "apps/vue/package.json",
+          "apps/vue/src/router/index.ts",
+          "apps/vue/src/services/api.ts",
+          "apps/vue/src/stores/auth.ts"
+        ]
+      },
+      {
+        "criterion": "mantenibilidad",
+        "score": 4,
+        "justification": "La organización por vistas, router, store y servicio API es clara y está soportada por TypeScript y tooling de proyecto.",
+        "evidence": [
+          "apps/vue/package.json",
+          "apps/vue/src/router/index.ts",
+          "apps/vue/src/services/api.ts",
+          "apps/vue/src/stores/auth.ts"
+        ]
+      },
+      {
+        "criterion": "madurez",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'madurez' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: madurez"
+        ]
+      },
+      {
+        "criterion": "modificabilidad",
+        "score": 4,
+        "justification": "Las vistas y el router aíslan cambios por flujo y el store centraliza autenticación.",
+        "evidence": [
+          "apps/vue/src/router/index.ts",
+          "apps/vue/src/services/api.ts",
+          "apps/vue/src/stores/auth.ts"
+        ]
+      },
+      {
+        "criterion": "modularidad",
+        "score": 4,
+        "justification": "Separa vistas, routing, estado y acceso a API en módulos distintos.",
+        "evidence": [
+          "apps/vue/src/router/index.ts",
+          "apps/vue/src/services/api.ts",
+          "apps/vue/src/stores/auth.ts"
+        ]
+      },
+      {
+        "criterion": "rendimiento",
+        "score": 2,
+        "justification": "Queda último en el run del 10 de marzo de 2026 con FCP medio 13988.9 ms, LCP 26154.8 ms y TTI 26393.5 ms, claramente por encima de React y Svelte.",
+        "evidence": [
+          "results/benchmark/2026-03-10T00-59-57-160Z/aggregated.json",
+          "results/benchmark/2026-03-10T00-59-57-160Z/raw/vue-home-run-1-lighthouse.json",
+          "results/benchmark/2026-03-10T00-59-57-160Z/raw/vue-login-run-1-lighthouse.json"
+        ]
+      },
+      {
+        "criterion": "persistencia",
+        "score": 4,
+        "justification": "La sesión se rehidrata desde localStorage mediante bootstrap del store y se usa en requests autenticados.",
+        "evidence": [
+          "apps/vue/src/services/api.ts",
+          "apps/vue/src/stores/auth.ts",
+          "apps/vue/src/router/index.ts"
+        ]
+      },
+      {
+        "criterion": "popularidad",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'popularidad' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: popularidad"
+        ]
+      },
+      {
+        "criterion": "portabilidad",
+        "score": 4,
+        "justification": "Es una SPA Vite con dependencia principal de la API HTTP, sin acoplamiento visible a plataforma específica.",
+        "evidence": [
+          "apps/vue/package.json",
+          "apps/vue/src/services/api.ts"
+        ]
+      },
+      {
+        "criterion": "presentación o UI",
+        "score": 4,
+        "justification": "Implementa la cobertura funcional del ejemplo RealWorld con rutas, formularios y vistas equivalentes a las otras variantes.",
+        "evidence": [
+          "apps/vue/src/router/index.ts",
+          "apps/vue/README.md",
+          "results/benchmark/2026-03-10T00-59-57-160Z/raw/vue-home-run-1.json"
+        ]
+      },
+      {
+        "criterion": "confiabilidad",
+        "score": 3,
+        "justification": "Gestiona bootstrap de sesión y rutas protegidas, pero el run exhibe peores tiempos y mayor costo total que las otras variantes.",
+        "evidence": [
+          "results/benchmark/2026-03-10T00-59-57-160Z/aggregated.json",
+          "apps/vue/src/router/index.ts",
+          "apps/vue/src/stores/auth.ts"
+        ]
+      },
+      {
+        "criterion": "escalabilidad",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'escalabilidad' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: escalabilidad"
+        ]
+      },
+      {
+        "criterion": "seguridad",
+        "score": 3,
+        "justification": "Usa rutas protegidas y token condicional, pero también persiste sesión en localStorage y no muestra controles extra del lado cliente.",
+        "evidence": [
+          "apps/vue/src/router/index.ts",
+          "apps/vue/src/services/api.ts",
+          "apps/vue/src/stores/auth.ts"
+        ]
+      },
+      {
+        "criterion": "simplicidad",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'simplicidad' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: simplicidad"
+        ]
+      },
+      {
+        "criterion": "tamaño de la biblioteca",
+        "score": 2,
+        "justification": "Es la implementación más pesada del run con un promedio descargado de 4649018 bytes.",
+        "evidence": [
+          "results/benchmark/2026-03-10T00-59-57-160Z/aggregated.json",
+          "results/benchmark/2026-03-10T00-59-57-160Z/raw/vue-home-run-1-lighthouse.json",
+          "apps/vue/package.json"
+        ]
+      },
+      {
+        "criterion": "testeabilidad",
+        "score": 4,
+        "justification": "Incluye Vitest y Vue Test Utils, además de separación suficiente entre vistas, store y API.",
+        "evidence": [
+          "apps/vue/src/__tests__/App.spec.ts",
+          "apps/vue/package.json",
+          "apps/vue/README.md"
+        ]
+      },
+      {
+        "criterion": "transparencia",
+        "score": 4,
+        "justification": "Router, store y cliente API están escritos de forma directa y tipada, con responsabilidades reconocibles.",
+        "evidence": [
+          "apps/vue/src/router/index.ts",
+          "apps/vue/src/services/api.ts",
+          "apps/vue/src/stores/auth.ts"
+        ]
+      },
+      {
+        "criterion": "usabilidad para el desarrollador",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'usabilidad para el desarrollador' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: usabilidad para el desarrollador"
+        ]
+      }
+    ],
+    "svelte": [
+      {
+        "criterion": "rendimiento de caché",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'rendimiento de caché' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: rendimiento de caché"
+        ]
+      },
+      {
+        "criterion": "documentación",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'documentación' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: documentación"
+        ]
+      },
+      {
+        "criterion": "experiencia interna previa",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'experiencia interna previa' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: experiencia interna previa"
+        ]
+      },
+      {
+        "criterion": "integración",
+        "score": 3,
+        "justification": "La integración es funcional y ligera con router, store y API, aunque con menos estructura tipada y menos capas de extensión que React o Vue.",
+        "evidence": [
+          "apps/svelte/package.json",
+          "apps/svelte/src/routes.js",
+          "apps/svelte/src/services/api.js",
+          "apps/svelte/src/stores/auth.js"
+        ]
+      },
+      {
+        "criterion": "mantenibilidad",
+        "score": 3,
+        "justification": "La estructura es clara, pero parte de la lógica central está en JavaScript y ofrece menos tipos explícitos que React y Vue.",
+        "evidence": [
+          "apps/svelte/package.json",
+          "apps/svelte/src/routes.js",
+          "apps/svelte/src/services/api.js",
+          "apps/svelte/src/stores/auth.js"
+        ]
+      },
+      {
+        "criterion": "madurez",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'madurez' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: madurez"
+        ]
+      },
+      {
+        "criterion": "modificabilidad",
+        "score": 4,
+        "justification": "La aplicación está descompuesta en páginas y componentes pequeños, lo que facilita cambios localizados.",
+        "evidence": [
+          "apps/svelte/src/routes.js",
+          "apps/svelte/src/services/api.js",
+          "apps/svelte/src/stores/auth.js"
+        ]
+      },
+      {
+        "criterion": "modularidad",
+        "score": 5,
+        "justification": "Es la variante más fragmentada en componentes y archivos fuente dentro de este repositorio, con piezas pequeñas y separadas.",
+        "evidence": [
+          "apps/svelte/src/routes.js",
+          "apps/svelte/src/services/api.js",
+          "apps/svelte/src/stores/auth.js"
+        ]
+      },
+      {
+        "criterion": "rendimiento",
+        "score": 5,
+        "justification": "Es la mejor en el run del 10 de marzo de 2026 con FCP medio 3838.3 ms, LCP 6193.0 ms, TTI 6193.0 ms y TBT 48.3 ms.",
+        "evidence": [
+          "results/benchmark/2026-03-10T00-59-57-160Z/aggregated.json",
+          "results/benchmark/2026-03-10T00-59-57-160Z/raw/svelte-home-run-1-lighthouse.json",
+          "results/benchmark/2026-03-10T00-59-57-160Z/raw/svelte-login-run-1-lighthouse.json"
+        ]
+      },
+      {
+        "criterion": "persistencia",
+        "score": 4,
+        "justification": "Persiste usuario y token y reconstruye sesión al arrancar antes de ejecutar flujos autenticados.",
+        "evidence": [
+          "apps/svelte/src/services/api.js",
+          "apps/svelte/src/stores/auth.js",
+          "apps/svelte/src/routes.js"
+        ]
+      },
+      {
+        "criterion": "popularidad",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'popularidad' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: popularidad"
+        ]
+      },
+      {
+        "criterion": "portabilidad",
+        "score": 4,
+        "justification": "Se ejecuta como SPA Vite estándar con dependencia principal de la API HTTP de RealWorld.",
+        "evidence": [
+          "apps/svelte/package.json",
+          "apps/svelte/src/services/api.js"
+        ]
+      },
+      {
+        "criterion": "presentación o UI",
+        "score": 4,
+        "justification": "Cubre las pantallas y flujos principales del ejemplo RealWorld en una interfaz comparable a las otras variantes.",
+        "evidence": [
+          "apps/svelte/src/routes.js",
+          "apps/svelte/README.md",
+          "results/benchmark/2026-03-10T00-59-57-160Z/raw/svelte-home-run-1.json"
+        ]
+      },
+      {
+        "criterion": "confiabilidad",
+        "score": 5,
+        "justification": "Presenta los mejores resultados del run y menor costo de interacción, además de manejar persistencia y errores en el store.",
+        "evidence": [
+          "results/benchmark/2026-03-10T00-59-57-160Z/aggregated.json",
+          "apps/svelte/src/services/api.js",
+          "apps/svelte/src/stores/auth.js"
+        ]
+      },
+      {
+        "criterion": "escalabilidad",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'escalabilidad' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: escalabilidad"
+        ]
+      },
+      {
+        "criterion": "seguridad",
+        "score": 3,
+        "justification": "Usa token en requests autenticados y controla sesión a nivel de aplicación, pero también depende de almacenamiento local y no añade hardening adicional visible.",
+        "evidence": [
+          "apps/svelte/src/routes.js",
+          "apps/svelte/src/services/api.js",
+          "apps/svelte/src/stores/auth.js"
+        ]
+      },
+      {
+        "criterion": "simplicidad",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'simplicidad' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: simplicidad"
+        ]
+      },
+      {
+        "criterion": "tamaño de la biblioteca",
+        "score": 5,
+        "justification": "Es la implementación más liviana del run con un promedio descargado de 746158 bytes.",
+        "evidence": [
+          "results/benchmark/2026-03-10T00-59-57-160Z/aggregated.json",
+          "results/benchmark/2026-03-10T00-59-57-160Z/raw/svelte-home-run-1-lighthouse.json",
+          "apps/svelte/package.json"
+        ]
+      },
+      {
+        "criterion": "testeabilidad",
+        "score": 4,
+        "justification": "Incluye Vitest y Testing Library, y su composición por piezas pequeñas favorece pruebas aisladas.",
+        "evidence": [
+          "apps/svelte/src/App.test.ts",
+          "apps/svelte/package.json",
+          "apps/svelte/README.md"
+        ]
+      },
+      {
+        "criterion": "transparencia",
+        "score": 3,
+        "justification": "La lógica es fácil de seguir, pero tiene menos tipos explícitos en servicios y stores que React o Vue.",
+        "evidence": [
+          "apps/svelte/src/routes.js",
+          "apps/svelte/src/services/api.js",
+          "apps/svelte/src/stores/auth.js"
+        ]
+      },
+      {
+        "criterion": "usabilidad para el desarrollador",
+        "score": null,
+        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'usabilidad para el desarrollador' sin inventar datos.",
+        "evidence": [
+          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
+          "TODO criterio: usabilidad para el desarrollador"
+        ]
+      }
+    ]
+  }
+}
