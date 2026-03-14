@@ -33,29 +33,31 @@
     "react": [
       {
         "criterion": "rendimiento de caché",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'rendimiento de caché' sin inventar datos.",
+        "score": 5,
+        "justification": "Existe poca diferencia entre frameworks. Se uso una libreria en comun para garantizar igualdad, el uso es casi similar en cada libreria",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: rendimiento de caché"
+          "El cliente de TanStack pesa 734 kB",
+          "React incluye hooks y funcionalidades nativas para cachear elementos del lado del cliente",
+          ""
         ]
       },
       {
         "criterion": "documentación",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'documentación' sin inventar datos.",
+        "score": 4,
+        "justification": "Tiene una buena documentación desde el 2023. Pero parte de su documentación depende de los proyectos o librerias externas.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: documentación"
+          "Tras el lanzamiento de react.dev, la documentación dio un salto de calidad enorme, enfocándose ahora en Hooks y Componentes de Función desde el inicio",
+          "Es muy interactiva, con desafíos de código integrados en cada sección que te obligan a practicar lo aprendido",
+          "Al ser una librería (no un framework completo), la documentación oficial a veces se queda corta para temas como enrutamiento o gestión de estado global, delegando esto a la comunidad o a frameworks como Next.js."
         ]
       },
       {
         "criterion": "experiencia interna previa",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'experiencia interna previa' sin inventar datos.",
+        "score": 4,
+        "justification": "He utilizado el framework previamente, mi calificacion se debe a que me permite implementar cualquier solucion pero suele ser mas compleja que en otros frameworks, requiere conocer JSX, manejo de hooks, y una curva de aprendizaje superior.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: experiencia interna previa"
+          "La amplia disponibilidad de recursos de aprendizaje, comunidades activas y proyectos empresariales implementados con React favorece que los equipos de desarrollo posean familiaridad previa con esta tecnología.",
+          "Es utilizado en muchos proyectos, como WordPress, Airbnb, Facebook, aplicaciones móviles gracias a React native, entre otros."
         ]
       },
       {
@@ -82,11 +84,12 @@
       },
       {
         "criterion": "madurez",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'madurez' sin inventar datos.",
+        "score": 5,
+        "justification": "Es la mas antigua de las librerias, está respaldada por una de las empresas mas importantes del mundo, y ha evolucionado a lo largo del tiempo, existe una comunidad muy grande y aplicaciones comerciales que lo utilizan en producción",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: madurez"
+          "Respaldada por Meta",
+          "Creada en el 2013",
+          "Alta retrocompatibilidad"
         ]
       },
       {
@@ -131,11 +134,12 @@
       },
       {
         "criterion": "popularidad",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'popularidad' sin inventar datos.",
+        "score": 5,
+        "justification": "Es la libreria mas popular, con la comunidad mas grande y con mas uso que el resto de librerias al ser respaldada por Facebook",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: popularidad"
+          "Posee 244 mil estrellas en Github",
+          "Según la Stack Overflow Developer Survey 2023 React fue usado por 40% de los desarrolladores",
+          "React fue creado y es mantenido por Meta Platforms y es utilizado por múltiples empresas tecnológicas de gran escala: Netflix, Airbnb, Uber"
         ]
       },
       {
@@ -169,11 +173,11 @@
       },
       {
         "criterion": "escalabilidad",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'escalabilidad' sin inventar datos.",
+        "score": 5,
+        "justification": "Al usar una arquitectura basada en componentes reutilizables, permite dividir aplicaciones grandes en módulos independientes, permite trabajo paralelo en múltiples equipos, facilita el mantenimiento y pruebas",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: escalabilidad"
+          "Grandes empresas mencionadas previamente utilizan esta libreria en sus aplicaciones en producción.",
+          "Su Virtual DOM optimiza actualizaciones en interfaces grandes."
         ]
       },
       {
@@ -188,11 +192,12 @@
       },
       {
         "criterion": "simplicidad",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'simplicidad' sin inventar datos.",
+        "score": 3,
+        "justification": "Requiere conocer varios conceptos y tecnologías propias, como JSX, hooks, useEffect, entre otros.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: simplicidad"
+          "Requiere bastante código para crear los componentes",
+          "Utiliza JSX para generar las interfaces",
+          "Se aleja de como es HTML"
         ]
       },
       {
@@ -227,40 +232,43 @@
       },
       {
         "criterion": "usabilidad para el desarrollador",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'usabilidad para el desarrollador' sin inventar datos.",
+        "score": 3,
+        "justification": "React posee un ecosistema extremadamente amplio y herramientas maduras. Sin embargo, requiere comprender varios conceptos adicionales como hooks, manejo de estado externo, renderización virtual DOM y configuración de herramientas complementarias.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: usabilidad para el desarrollador"
+          "React ofrece un ecosistema amplio y herramientas como React DevTools que facilitan el desarrollo, aunque requiere comprender conceptos como hooks y manejo de estado.",
+          "La flexibilidad de React permite construir interfaces complejas, pero la integración de herramientas externas puede aumentar la complejidad inicial del proyecto."
         ]
       }
     ],
     "vue": [
       {
         "criterion": "rendimiento de caché",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'rendimiento de caché' sin inventar datos.",
+        "score": 4,
+        "justification": "Tanstack trae componentes y composables para el manejo, facilitando el uso. Pero no mucho por defecto.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: rendimiento de caché"
+          "Pocos componentes o composables por defecto, vuejs cachea cosas internamente.",
+          "Existen gran variedad de librerias externas para manejar la cache",
+          "La curva de aprendizaje es muy baja ya que es parecido a HTML"
         ]
       },
       {
         "criterion": "documentación",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'documentación' sin inventar datos.",
+        "score": 5,
+        "justification": "Muy reconocida por ser una excelente fuente de documentación y abarca todo tipo de información.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: documentación"
+          "Su certificación oficial utiliza la documentación como base de estudio",
+          "Reconocida como la mejor del ecosistema por su claridad y estructura",
+          "Enfoque amigable para principiantes, con una progresión lógica que no asume que conoces herramientas complejas de antemano",
+          "Ofrece guías detalladas para sus herramientas oficiales (como Vue Router o Pinia), lo que evita que tengas que buscar soluciones externas fragmentadas"
         ]
       },
       {
         "criterion": "experiencia interna previa",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'experiencia interna previa' sin inventar datos.",
+        "score": 5,
+        "justification": "Es muy fácil de aprender y de usar, su sintanxis es muy parecida a programar con HTML, por lo que su curva de aprendizaje es muy suave, brinda funcionalidades adicionales por defecto, que ayudan a resolver problemas complejos.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: experiencia interna previa"
+          "Vue cuenta con una comunidad internacional activa y una adopción significativa en proyectos web modernos, lo que facilita que muchos desarrolladores tengan experiencia previa en su implementación.",
+          "La existencia de numerosos tutoriales, documentación clara y ejemplos prácticos ha contribuido a que Vue sea utilizado en diversos proyectos académicos y profesionales."
         ]
       },
       {
@@ -432,40 +440,41 @@
       },
       {
         "criterion": "usabilidad para el desarrollador",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'usabilidad para el desarrollador' sin inventar datos.",
+        "score": 5,
+        "justification": "Vue es ampliamente reconocido por su simplicidad. Utiliza Single File Components, documentación clara y una arquitectura intuitiva que facilita comenzar rápidamente. Muchos desarrolladores consideran que Vue tiene una de las mejores experiencias de desarrollo.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: usabilidad para el desarrollador"
+          "Facilita el desarrollo mediante su estructura basada en Single File Components y una sintaxis clara que organiza HTML, CSS y JavaScript, lo que simplifica la comprensión del código.",
+          "Su documentación clara y arquitectura progresiva permiten que desarrolladores con distintos niveles de experiencia adopten el framework con relativa facilidad."
         ]
       }
     ],
     "svelte": [
       {
         "criterion": "rendimiento de caché",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'rendimiento de caché' sin inventar datos.",
+        "score": 3,
+        "justification": "El cliente de Tanstack es ligero, pero fuera de eso es complejo implementar el cache.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: rendimiento de caché"
+          "Toca hacer cache de forma manual, mediante cabeceras HTTP.",
+          "La curva de aprendizaje es muy baja, es como escribir JS vanilla."
         ]
       },
       {
         "criterion": "documentación",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'documentación' sin inventar datos.",
+        "score": 3,
+        "justification": "Es muy simple y debido al pequeño tamaño de su comunidad hay poca documentación",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: documentación"
+          "Muy directa y minimalista, reflejando la filosofía del propio compilador.",
+          "Su gran diferencial es el Tutorial Interactivo integrado en el sitio oficial, que te permite aprender el 90% del framework escribiendo código en el navegador paso a paso.",
+          "Al ser una comunidad más pequeña, hay menos blogs, cursos de terceros o respuestas en StackOverflow comparado con React."
         ]
       },
       {
         "criterion": "experiencia interna previa",
-        "score": null,
+        "score": 3,
         "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'experiencia interna previa' sin inventar datos.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: experiencia interna previa"
+          "Svelte es un framework relativamente reciente en comparación con otras bibliotecas frontend, lo que limita la cantidad de desarrolladores con experiencia previa significativa en su uso.",
+          "Aunque su comunidad se encuentra en crecimiento, su adopción en proyectos empresariales aún es menor en comparación con frameworks más establecidos."
         ]
       },
       {
@@ -637,11 +646,11 @@
       },
       {
         "criterion": "usabilidad para el desarrollador",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'usabilidad para el desarrollador' sin inventar datos.",
+        "score": 5,
+        "justification": "Svelte compila los componentes en JavaScript optimizado, eliminando muchas abstracciones. Su sintaxis es cercana al HTML tradicional, lo que reduce la complejidad conceptual.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: usabilidad para el desarrollador"
+          "Utiliza una sintaxis cercana a HTML, CSS y JavaScript tradicional, facilitando la comprensión del código y reduce la necesidad de aprender abstracciones complejas.",
+          "Su modelo de reactividad basado en asignaciones de variables simplifica el manejo del estado y permite una experiencia de desarrollo más directa."
         ]
       }
     ]
