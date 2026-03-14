@@ -295,11 +295,11 @@
       },
       {
         "criterion": "madurez",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'madurez' sin inventar datos.",
+        "score": 4,
+        "justification": "Vue presenta un alto nivel de madurez, aunque ligeramente menor que React en términos de adopción global. Desde su lanzamiento en 2014, ha desarrollado un ecosistema sólido que incluye herramientas oficiales como Vue Router, Pinia y Vue CLI, además de una documentación ampliamente reconocida por su calidad.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: madurez"
+          "Framework estable con comunidad amplia y herramientas oficiales",
+          "Su arquitectura estable y el mantenimiento continuo de sus versiones principales evidencian un grado importante de consolidación."
         ]
       },
       {
@@ -344,11 +344,11 @@
       },
       {
         "criterion": "popularidad",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'popularidad' sin inventar datos.",
+        "score": 4,
+        "justification": "Vue ha logrado una adopción significativa dentro del desarrollo frontend gracias a su facilidad de aprendizaje y su arquitectura progresiva. Esto ha contribuido a que numerosos desarrolladores y organizaciones lo utilicen en proyectos web modernos.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: popularidad"
+          "Antes de dividir el codigo en repositorios mas pequeños, tenía 220mil estrellas en Github",
+          "17% de los desarrolladores lo usa según la encuesta de StackOverflow en el 2025"
         ]
       },
       {
@@ -382,11 +382,11 @@
       },
       {
         "criterion": "escalabilidad",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'escalabilidad' sin inventar datos.",
+        "score": 4,
+        "justification": "Vue permite desarrollar aplicaciones escalables mediante su arquitectura basada en componentes y el soporte de herramientas oficiales que facilitan la organización del código en proyectos grandes.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: escalabilidad"
+          "Vue es utilizado en diversas aplicaciones empresariales y plataformas web modernas, lo que evidencia su capacidad para soportar proyectos de tamaño considerable.",
+          "El ecosistema oficial de Vue incluye herramientas como Vue Router y Pinia, que ayudan a gestionar navegación y estado en aplicaciones complejas."
         ]
       },
       {
@@ -401,11 +401,11 @@
       },
       {
         "criterion": "simplicidad",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'simplicidad' sin inventar datos.",
+        "score": 5,
+        "justification": "Vue se caracteriza por su diseño intuitivo y su estructura clara basada en componentes, lo que facilita el aprendizaje y la comprensión de la librería, incluso para desarrolladores con experiencia limitada.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: simplicidad"
+          "Los Single File Components organizan HTML, CSS y JavaScript en una estructura clara y fácil de entender.",
+          "La documentación oficial de Vue es ampliamente reconocida por su claridad y accesibilidad."
         ]
       },
       {
@@ -501,11 +501,10 @@
       },
       {
         "criterion": "madurez",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'madurez' sin inventar datos.",
+        "score": 3,
+        "justification": "Es la librería mas reciente, en crecimiento pero aun no cuenta la estabilidad ni herramientas de las otras librerías",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: madurez"
+          "Si bien cuenta con herramientas oficiales como SvelteKit y una comunidad cada vez más activa, su adopción en proyectos empresariales y su ecosistema de bibliotecas aún es menor que el de React o Vue."
         ]
       },
       {
@@ -550,11 +549,11 @@
       },
       {
         "criterion": "popularidad",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'popularidad' sin inventar datos.",
+        "score": 3,
+        "justification": "Svelte ha ganado atención en la comunidad de desarrollo frontend debido a su enfoque innovador basado en compilación y su alto rendimiento. Sin embargo, su adopción aún es menor en comparación con frameworks más establecidos como React y Vue.j",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: popularidad"
+          "El repositorio oficial de Svelte en GitHub ha experimentado un crecimiento constante en número de estrella (86 mil) y contribuciones, lo que refleja un interés creciente en la comunidad.",
+          "Según la encuesta State of JavaScript 2023, Svelte ocupa el segundo lugar en retención, interés y conocimiento"
         ]
       },
       {
@@ -588,11 +587,11 @@
       },
       {
         "criterion": "escalabilidad",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'escalabilidad' sin inventar datos.",
+        "score": 3,
+        "justification": "Svelte permite desarrollar aplicaciones eficientes gracias a su enfoque basado en compilación, aunque su ecosistema y adopción en proyectos de gran escala aún es menor en comparación con React y Vue.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: escalabilidad"
+          "El framework SvelteKit proporciona herramientas para estructurar aplicaciones más grandes, incluyendo enrutamiento y renderizado del lado del servidor.",
+          "Aunque existen proyectos relevantes construidos con Svelte, su adopción en aplicaciones empresariales de gran escala es todavía limitada frente a otras librerías más consolidadas"
         ]
       },
       {
@@ -607,14 +606,14 @@
       },
       {
         "criterion": "simplicidad",
-        "score": null,
-        "justification": "TODO: falta evidencia suficiente en este repositorio y en el run 2026-03-10T00-59-57-160Z para puntuar 'simplicidad' sin inventar datos.",
+        "score": 5,
+        "justification": "Svelte ofrece un enfoque simple al desarrollo de interfaces al utilizar una sintaxis cercana al desarrollo tradicional con HTML, CSS y JavaScript, reduciendo la necesidad de conceptos adicionales.",
         "evidence": [
-          "TODO: investigar evidencia externa o conocimiento interno antes de asignar puntaje.",
-          "TODO criterio: simplicidad"
+          "El modelo de reactividad basado en asignaciones de variables permite manejar el estado de forma directa y comprensible.",
+          "Al compilar los componentes en JavaScript optimizado, Svelte elimina la necesidad de manejar estructuras complejas como el Virtual DOM."
         ]
       },
-      {
+      
         "criterion": "tamaño de la biblioteca",
         "score": 5,
         "justification": "Es la implementación más liviana del run con un promedio descargado de 746158 bytes.",
